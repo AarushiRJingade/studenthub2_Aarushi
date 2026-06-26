@@ -6,14 +6,17 @@
     <title>StudentHub | Ultimate Workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
                     colors: {
                         neon: {
                             pink: '#ff007f',
@@ -62,6 +65,15 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
+        /* Nav Highlight Animation */
+        #nav-highlight {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .nav-section {
+            transition: all 0.4s ease-out;
+        }
+
         .slide-in {
             animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
@@ -72,7 +84,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Interactive Hover States */
         .glow-hover {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -84,13 +95,18 @@
             transform: translateY(-2px);
         }
 
-        /* Custom Cyber Scrollbars */
+        /* Remove arrows from number inputs */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #ff007f; }
         
-        /* Input Overrides */
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="datetime-local"]::-webkit-calendar-picker-indicator {
             filter: invert(1) hue-rotate(180deg);
@@ -98,13 +114,22 @@
         }
     </style>
 </head>
-<body class="font-sans min-h-screen pb-12 selection:bg-neon-pink selection:text-white">
+<body class="font-sans min-h-screen pb-12 selection:bg-neon-pink selection:text-white pt-24">
 
     <canvas id="bg-canvas"></canvas>
 
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-[0_15px_35px_rgba(0,0,0,0.5)] border-neon-cyan/40 backdrop-blur-xl">
+        <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-neon-cyan/20 to-neon-pink/20 border border-neon-cyan/60 rounded-full shadow-[0_0_15px_rgba(0,240,255,0.4)] pointer-events-none" style="left: 6px; width: 110px;"></div>
+
+        <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 px-6 py-2.5 text-sm font-bold text-white drop-shadow-[0_0_8px_#fff] transition-colors rounded-full">Dashboard</button>
+        <button onclick="moveNav(this, 'focus')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Focus Mode</button>
+        <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Academics</button>
+        <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Projects & Events</button>
+    </nav>
+
     <div class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-12">
         
-        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-neon-cyan/20 pb-6 slide-in" style="animation-delay: 0.1s;">
+        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-neon-cyan/20 pb-6 slide-in" style="animation-delay: 0.2s;">
             <div class="flex items-center gap-6">
                 <div class="w-20 h-20 rounded-2xl bg-black/50 border-2 border-neon-cyan flex items-center justify-center shadow-[0_0_20px_rgba(0,240,255,0.4)]">
                     <span class="text-3xl">👨‍💻</span>
@@ -124,112 +149,258 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-            
-            <div class="lg:col-span-8 flex flex-col gap-8">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 slide-in" style="animation-delay: 0.2s;">
-                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-black/50">
-                            <div id="pomodoroProgress" class="h-full bg-gradient-to-r from-neon-cyan to-neon-pink w-0 transition-all duration-1000 shadow-[0_0_10px_#ff007f]"></div>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                            <span class="text-neon-cyan">⏱️</span> Focus Session
+        <div id="section-dashboard" class="nav-section opacity-100 translate-y-0">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+                <div class="lg:col-span-7 flex flex-col gap-8">
+                    <div class="glass-card p-6 rounded-2xl flex flex-col flex-grow slide-in" style="animation-delay: 0.3s;">
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-neon-pink">📝</span> Master Scratchpad
                         </h2>
-                        <div class="flex gap-2 mb-4">
-                            <input type="number" id="durationInput" value="25" min="1" max="120" class="w-full bg-black/40 border border-neon-cyan/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-neon-pink transition-colors" placeholder="Minutes">
-                        </div>
-                        <div class="flex flex-col items-center py-2">
-                            <div class="text-6xl font-bold text-white tracking-widest mb-6 font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.4)]" id="timerDisplay">25:00</div>
-                            <div class="flex gap-3 w-full">
-                                <button onclick="toggleTimer()" id="timerBtn" class="flex-grow bg-neon-cyan text-black py-3 rounded-xl hover:bg-white transition-all font-bold active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.4)]">Start</button>
-                                <button onclick="resetTimer()" class="bg-black/50 border border-neon-pink/50 text-neon-pink hover:bg-neon-pink hover:text-white px-4 py-3 rounded-xl transition-all active:scale-95">Reset</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-6 rounded-2xl flex flex-col">
-                        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                            <span class="text-neon-pink">📝</span> Scratchpad
-                        </h2>
-                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow bg-black/40 border border-neon-cyan/30 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-neon-pink transition-colors resize-none" placeholder="Draft ideas, paste links, or outline scripts here..."></textarea>
+                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow min-h-[400px] bg-black/40 border border-neon-cyan/30 rounded-xl p-6 text-lg text-slate-200 focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all resize-none" placeholder="Draft ideas, paste links, or outline scripts here..."></textarea>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl slide-in" style="animation-delay: 0.3s;">
+                <div class="lg:col-span-5 flex flex-col gap-8">
+                    <div class="glass-card p-6 rounded-2xl flex-grow slide-in" style="animation-delay: 0.4s;">
+                        <h2 class="text-xl font-bold text-white mb-4 border-b border-neon-cyan/20 pb-4 flex items-center gap-2">
+                            <span class="text-neon-cyan">✅</span> Action Items
+                        </h2>
+                        <div class="mb-5">
+                            <div class="flex justify-between text-xs font-bold mb-2">
+                                <span class="text-slate-300">Completion Rate</span>
+                                <span id="taskProgressText" class="text-neon-pink drop-shadow-[0_0_5px_#ff007f]">0%</span>
+                            </div>
+                            <div class="w-full bg-black/60 rounded-full h-2 overflow-hidden border border-neon-cyan/20">
+                                <div id="taskProgressBar" class="h-full bg-gradient-to-r from-neon-cyan to-neon-pink transition-all duration-500 shadow-[0_0_10px_#ff007f]" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mb-6 group">
+                            <input type="text" id="taskInput" class="bg-black/40 border border-neon-cyan/30 rounded-xl px-4 py-2 flex-grow text-sm text-white focus:outline-none focus:border-neon-pink transition-all placeholder-slate-400" placeholder="Initialize task...">
+                            <button onclick="addTask()" class="bg-neon-cyan text-black px-4 py-2 rounded-xl hover:bg-white hover:shadow-[0_0_15px_#00f0ff] transition-all font-bold active:scale-95">+</button>
+                        </div>
+                        <ul id="taskList" class="space-y-2 max-h-[350px] overflow-y-auto pr-2"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-focus" class="nav-section hidden opacity-0 translate-y-4">
+            <div class="flex flex-col items-center justify-center min-h-[60vh] glass-card p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden border-neon-cyan/50 shadow-[0_0_40px_rgba(0,240,255,0.15)]">
+                
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/20 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
+
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3 z-10 drop-shadow-[0_0_10px_#ff007f]">
+                    <span class="text-neon-cyan text-4xl">🧿</span> Deep Focus
+                </h2>
+
+                <div class="flex gap-4 md:gap-6 mb-12 z-10">
+                    <div class="flex flex-col items-center">
+                        <input type="number" id="hInput" value="0" min="0" max="99" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
+                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Hours</span>
+                    </div>
+                    <div class="text-5xl text-white font-bold self-start mt-4 drop-shadow-[0_0_10px_#fff]">:</div>
+                    <div class="flex flex-col items-center">
+                        <input type="number" id="mInput" value="25" min="0" max="59" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
+                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Minutes</span>
+                    </div>
+                    <div class="text-5xl text-white font-bold self-start mt-4 drop-shadow-[0_0_10px_#fff]">:</div>
+                    <div class="flex flex-col items-center">
+                        <input type="number" id="sInput" value="0" min="0" max="59" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
+                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Seconds</span>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-center mb-12 z-10">
+                    <svg class="w-[340px] h-[340px] md:w-[400px] md:h-[400px] transform -rotate-90 drop-shadow-[0_0_25px_rgba(0,240,255,0.5)]">
+                        <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" />
+                        <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#neonGradient)" stroke-width="12" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00f0ff" />
+                                <stop offset="100%" stop-color="#ff007f" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none">
+                        <span id="focusDisplay" class="text-5xl md:text-7xl font-mono font-bold text-white tracking-wider drop-shadow-[0_0_20px_rgba(255,0,127,0.8)]">00:25:00</span>
+                        <span id="focusStatus" class="text-neon-cyan text-sm font-bold tracking-widest mt-4 uppercase">Awaiting Start</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 w-full max-w-lg z-10">
+                    <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-neon-cyan to-neon-pink text-white py-5 rounded-2xl hover:opacity-90 transition-all font-bold text-2xl active:scale-95 shadow-[0_0_25px_rgba(255,0,127,0.5)] tracking-widest uppercase">ENGAGE</button>
+                    <button onclick="resetFocusTimer()" class="bg-black/50 border border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan hover:text-black px-10 py-5 rounded-2xl transition-all font-bold text-xl active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.2)] tracking-widest uppercase">RESET</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-academics" class="nav-section hidden opacity-0 translate-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+                <div class="lg:col-span-8 glass-card p-8 rounded-2xl">
                     <div class="flex items-center gap-3 mb-6 border-b border-neon-cyan/20 pb-4">
                         <span class="text-2xl">🎓</span>
-                        <h2 class="text-2xl font-bold text-white">Academic Tracking</h2>
+                        <h2 class="text-2xl font-bold text-white">Live Tracking Hub</h2>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
                             <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_8px_#00f0ff]"></span> Schedule
                             </h3>
                             <ul id="timetableList" class="space-y-3"></ul>
                         </div>
-
                         <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
-                            <h3 class="text-lg font-semibold text-white mb-4">Live Attendance</h3>
+                            <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                                <span class="text-neon-pink">📈</span> Live Attendance
+                            </h3>
                             <ul id="attendanceList" class="space-y-4"></ul>
                         </div>
-
-                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20 flex flex-col">
-                            <h3 class="text-lg font-semibold text-white mb-4">Booking Interface</h3>
-                            <div class="flex flex-col gap-3 mb-4">
-                                <input type="text" id="examTitle" class="bg-black/50 border border-neon-cyan/30 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink" placeholder="Exam Name (e.g. MTH201)">
-                                <input type="datetime-local" id="examDate" class="bg-black/50 border border-neon-cyan/30 text-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink">
-                                <button onclick="bookExam()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all font-semibold active:scale-95">Lock Slot</button>
-                            </div>
-                            <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[150px] pr-1"></ul>
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="lg:col-span-4 flex flex-col gap-8">
-                
-                <div class="glass-card p-6 rounded-2xl flex-grow slide-in" style="animation-delay: 0.4s;">
-                    <div class="flex items-center justify-between mb-6 border-b border-neon-cyan/20 pb-4">
-                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <span class="text-neon-cyan">✅</span> Action Items
+                <div class="lg:col-span-4 flex flex-col gap-8">
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-neon-cyan">📝</span> Exam Booking
+                        </h3>
+                        <div class="flex flex-col gap-3 mb-4">
+                            <input type="text" id="examTitle" class="bg-black/50 border border-neon-cyan/30 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink text-sm" placeholder="Exam Name (e.g. MTH201)">
+                            <input type="datetime-local" id="examDate" class="bg-black/50 border border-neon-cyan/30 text-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink text-sm">
+                            <button onclick="bookExam()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all font-semibold active:scale-95">Lock Slot</button>
+                        </div>
+                        <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[150px] pr-1"></ul>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-neon-pink">🔥</span> Deadlines
                         </h2>
-                    </div>
-                    
-                    <div class="flex gap-2 mb-6 group">
-                        <input type="text" id="taskInput" class="bg-black/40 border border-neon-cyan/30 rounded-xl px-4 py-2 flex-grow text-sm text-white focus:outline-none focus:border-neon-pink transition-all placeholder-slate-400" placeholder="Initialize task...">
-                        <button onclick="addTask()" class="bg-neon-cyan text-black px-4 py-2 rounded-xl hover:bg-white hover:shadow-[0_0_15px_#00f0ff] transition-all font-bold active:scale-95">+</button>
-                    </div>
-                    
-                    <ul id="taskList" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></ul>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl slide-in" style="animation-delay: 0.5s;">
-                    <h2 class="text-xl font-bold text-white mb-4 border-b border-neon-cyan/20 pb-4 flex items-center gap-2">
-                        <span class="text-neon-pink">🔥</span> Deadlines
-                    </h2>
-                    
-                    <div class="bg-black/30 rounded-xl p-4 border border-neon-cyan/20 mb-4">
-                        <div class="flex flex-col gap-3">
-                            <input type="text" id="courseInput" class="bg-black/50 border border-neon-cyan/30 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink placeholder-slate-400" placeholder="Course & Title">
-                            <div class="flex gap-2 items-center">
-                                <input type="date" id="dateInput" class="w-full bg-black/50 border border-neon-cyan/30 text-slate-300 text-sm rounded-lg px-2 py-2 focus:outline-none focus:border-neon-pink">
-                                <button onclick="addAssignment()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all text-sm font-bold active:scale-95">Add</button>
+                        <div class="bg-black/30 rounded-xl p-4 border border-neon-cyan/20 mb-4">
+                            <div class="flex flex-col gap-3">
+                                <input type="text" id="courseInput" class="bg-black/50 border border-neon-cyan/30 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink placeholder-slate-400" placeholder="Course & Title">
+                                <div class="flex gap-2 items-center">
+                                    <input type="date" id="dateInput" class="w-full bg-black/50 border border-neon-cyan/30 text-slate-300 text-sm rounded-lg px-2 py-2 focus:outline-none focus:border-neon-pink">
+                                    <button onclick="addAssignment()" class="bg-neon-cyan text-black hover:bg-white hover:shadow-[0_0_15px_#00f0ff] px-4 py-2 rounded-lg transition-all text-sm font-bold active:scale-95">Add</button>
+                                </div>
                             </div>
                         </div>
+                        <ul id="assignmentList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2"></ul>
                     </div>
-                    
-                    <ul id="assignmentList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2"></ul>
                 </div>
-
             </div>
         </div>
+
+        <div id="section-events" class="nav-section hidden opacity-0 translate-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="glass-card p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-neon-cyan/20 pb-4 flex items-center gap-3">
+                        <span class="text-neon-cyan">🚀</span> Active Projects
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="bg-black/40 border border-neon-cyan/30 rounded-xl p-5 glow-hover cursor-default">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="bg-neon-pink/20 text-neon-pink border border-neon-pink/50 text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase">Video Production</span>
+                                <span class="text-xs font-mono text-neon-cyan">IN PROGRESS</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Grand Theft Auto VI Promo</h3>
+                            <p class="text-sm text-slate-400 mb-4">30-second AI-generated promotional video sequence utilizing Descript text-to-video AI tools.</p>
+                            <div class="grid grid-cols-2 gap-2 text-xs font-medium text-slate-300">
+                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-neon-cyan">✓</span> Hook Setup</div>
+                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-neon-cyan">✓</span> Graphics & World</div>
+                                <div class="bg-black/50 p-2 rounded flex items-center gap-2 border border-neon-pink/30"><span class="animate-pulse">⏳</span> Action & Chaos</div>
+                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-slate-600">○</span> Call to Action</div>
+                            </div>
+                        </div>
+                        <div class="bg-black/40 border border-neon-cyan/30 rounded-xl p-5 glow-hover cursor-default">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="bg-neon-cyan/20 text-neon-cyan border border-neon-cyan/50 text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase">Web Dev</span>
+                                <span class="text-xs font-mono text-slate-400">PLANNING</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Carbon Footprint Awareness</h3>
+                            <p class="text-sm text-slate-400">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-neon-cyan/20 pb-4 flex items-center gap-3">
+                        <span class="text-neon-pink">🎟️</span> Campus Events
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="bg-black/40 border border-neon-pink/30 rounded-xl p-4 flex items-center gap-4 glow-hover cursor-pointer transition-all">
+                            <div class="w-12 h-12 rounded-lg bg-neon-pink/20 border border-neon-pink/50 flex flex-col items-center justify-center flex-shrink-0 text-neon-pink">
+                                <span class="text-[10px] font-bold uppercase tracking-wider">Early</span>
+                                <span class="text-lg font-bold leading-none">'26</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-lg">FrostHack 2026</h3>
+                                <p class="text-xs text-slate-400">Hackathon - Registration confirmed.</p>
+                            </div>
+                        </div>
+                        <div class="bg-black/40 border border-slate-700 rounded-xl p-4 flex items-center gap-4 glow-hover cursor-pointer transition-all hover:border-neon-cyan/50">
+                            <div class="w-12 h-12 rounded-lg bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
+                                <span class="text-[10px] font-bold uppercase tracking-wider">Feb</span>
+                                <span class="text-lg font-bold leading-none">20</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-lg">Revels 2026</h3>
+                                <p class="text-xs text-slate-400">Multi-day university community festival.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         // ==========================================
-        // 1. CRAZY AURA ANIMATION (Floating Glow)
+        // 1. NAVIGATION LOGIC (The Sliding Pill)
+        // ==========================================
+        window.addEventListener('load', () => {
+            const activeBtn = document.querySelector('.active-nav');
+            if (activeBtn) moveNav(activeBtn, 'dashboard', true);
+            updateFocusDisplay(true); // Initialize the timer SVG
+        });
+
+        function moveNav(element, sectionId, isInitial = false) {
+            const highlight = document.getElementById('nav-highlight');
+            const navContainer = element.parentElement;
+            
+            const containerRect = navContainer.getBoundingClientRect();
+            const elementRect = element.getBoundingClientRect();
+            
+            highlight.style.width = `${elementRect.width}px`;
+            highlight.style.left = `${elementRect.left - containerRect.left}px`;
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-white', 'drop-shadow-[0_0_8px_#fff]', 'active-nav');
+                btn.classList.add('text-slate-400');
+            });
+            element.classList.remove('text-slate-400');
+            element.classList.add('text-white', 'drop-shadow-[0_0_8px_#fff]', 'active-nav');
+
+            if (!isInitial) {
+                document.querySelectorAll('.nav-section').forEach(sec => {
+                    sec.classList.remove('opacity-100', 'translate-y-0');
+                    sec.classList.add('opacity-0', 'translate-y-4');
+                    
+                    setTimeout(() => {
+                        sec.classList.add('hidden');
+                        if (sec.id === `section-${sectionId}`) {
+                            sec.classList.remove('hidden');
+                            setTimeout(() => {
+                                sec.classList.remove('opacity-0', 'translate-y-4');
+                                sec.classList.add('opacity-100', 'translate-y-0');
+                            }, 50);
+                        }
+                    }, 300);
+                });
+            }
+        }
+
+        // ==========================================
+        // 2. CRAZY AURA ANIMATION
         // ==========================================
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -244,10 +415,8 @@
             const particleCount = Math.floor((width * height) / 10000);
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
-                    x: Math.random() * width, 
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.3, 
-                    vy: (Math.random() * -0.5) - 0.2,
+                    x: Math.random() * width, y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() * -0.5) - 0.2,
                     radius: Math.random() * 2.5 + 1,
                     color: colors[Math.floor(Math.random() * colors.length)],
                     alpha: Math.random() * 0.5 + 0.3
@@ -270,90 +439,127 @@
                 ctx.shadowColor = p.color;
                 ctx.globalAlpha = p.alpha;
                 ctx.fill();
-                
                 ctx.shadowBlur = 0;
                 ctx.globalAlpha = 1.0;
             });
             requestAnimationFrame(drawCanvas);
         }
-
         window.addEventListener('resize', initCanvas);
         initCanvas(); drawCanvas();
 
-        // Live Header Clock
         setInterval(() => {
             document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
         }, 1000);
 
         // ==========================================
-        // 2. POMODORO TIMER LOGIC
+        // 3. EPIC FOCUS TIMER LOGIC
         // ==========================================
-        let timerInterval;
-        let totalTime = 1500;
-        let timeLeft = 1500;
-        let isRunning = false;
+        let focusInterval;
+        let focusTotalTime = 1500; // 25 mins default
+        let focusTimeLeft = 1500;
+        let isFocusRunning = false;
+        
+        // Dynamically calculate the SVG circle circumference
+        const ring = document.getElementById('focusRing');
+        const radius = ring.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        ring.style.strokeDasharray = `${circumference} ${circumference}`;
 
-        function updateTimerDisplay() {
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').textContent = `${m}:${s}`;
-            const progress = ((totalTime - timeLeft) / totalTime) * 100;
-            document.getElementById('pomodoroProgress').style.width = `${progress}%`;
-        }
+        function updateFocusDisplay(init = false) {
+            const hInput = document.getElementById('hInput');
+            const mInput = document.getElementById('mInput');
+            const sInput = document.getElementById('sInput');
 
-        function toggleTimer() {
-            const btn = document.getElementById('timerBtn');
-            const input = document.getElementById('durationInput');
-
-            if (isRunning) {
-                clearInterval(timerInterval);
-                btn.textContent = 'Start';
-                btn.classList.replace('bg-white', 'bg-neon-cyan');
-                btn.classList.replace('text-black', 'text-black');
-                input.disabled = false;
-            } else {
-                if (timeLeft === totalTime) {
-                    const minutes = parseInt(input.value) || 25;
-                    totalTime = minutes * 60;
-                    timeLeft = totalTime;
-                }
-                input.disabled = true;
-                timerInterval = setInterval(() => {
-                    if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); } 
-                    else { resetTimer(); alert("Focus session complete! Take a break."); }
-                }, 1000);
-                btn.textContent = 'Pause';
-                btn.classList.replace('bg-neon-cyan', 'bg-white');
+            if (!isFocusRunning && init) {
+                const h = parseInt(hInput.value) || 0;
+                const m = parseInt(mInput.value) || 0;
+                const s = parseInt(sInput.value) || 0;
+                focusTotalTime = (h * 3600) + (m * 60) + s;
+                focusTimeLeft = focusTotalTime;
             }
-            isRunning = !isRunning;
+
+            const h = Math.floor(focusTimeLeft / 3600).toString().padStart(2, '0');
+            const m = Math.floor((focusTimeLeft % 3600) / 60).toString().padStart(2, '0');
+            const s = (focusTimeLeft % 60).toString().padStart(2, '0');
+            
+            document.getElementById('focusDisplay').textContent = `${h}:${m}:${s}`;
+            
+            // Calculate and apply SVG ring offset
+            const offset = focusTotalTime > 0 ? circumference - (focusTimeLeft / focusTotalTime) * circumference : 0;
+            ring.style.strokeDashoffset = offset;
         }
 
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            const input = document.getElementById('durationInput');
-            totalTime = (parseInt(input.value) || 25) * 60;
-            timeLeft = totalTime;
-            input.disabled = false;
-            updateTimerDisplay();
-            const btn = document.getElementById('timerBtn');
-            btn.textContent = 'Start';
-            btn.classList.replace('bg-white', 'bg-neon-cyan');
-        }
-
-        document.getElementById('durationInput').addEventListener('input', (e) => {
-            if (!isRunning) { timeLeft = parseInt(e.target.value) * 60 || 0; updateTimerDisplay(); }
+        // Add listeners to update ring immediately when user types
+        ['hInput', 'mInput', 'sInput'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                if (!isFocusRunning) updateFocusDisplay(true);
+            });
         });
 
+        function toggleFocusTimer() {
+            const btn = document.getElementById('focusBtn');
+            const status = document.getElementById('focusStatus');
+            const inputs = [document.getElementById('hInput'), document.getElementById('mInput'), document.getElementById('sInput')];
+
+            if (isFocusRunning) {
+                // Pause
+                clearInterval(focusInterval);
+                btn.textContent = 'RESUME';
+                status.textContent = 'PAUSED';
+                status.classList.remove('animate-pulse', 'text-neon-pink');
+                status.classList.add('text-neon-cyan');
+                inputs.forEach(input => input.disabled = false);
+            } else {
+                // Start
+                if (focusTimeLeft === focusTotalTime) updateFocusDisplay(true);
+                if (focusTimeLeft <= 0) return; // Don't start if 0
+
+                inputs.forEach(input => input.disabled = true);
+                status.textContent = 'SESSION ACTIVE';
+                status.classList.add('animate-pulse', 'text-neon-pink');
+                status.classList.remove('text-neon-cyan');
+                btn.textContent = 'PAUSE';
+                
+                focusInterval = setInterval(() => {
+                    if (focusTimeLeft > 0) { 
+                        focusTimeLeft--; 
+                        updateFocusDisplay(); 
+                    } else { 
+                        resetFocusTimer(); 
+                        alert("Focus session complete! Time to rest."); 
+                    }
+                }, 1000);
+            }
+            isFocusRunning = !isFocusRunning;
+        }
+
+        function resetFocusTimer() {
+            clearInterval(focusInterval);
+            isFocusRunning = false;
+            
+            const inputs = [document.getElementById('hInput'), document.getElementById('mInput'), document.getElementById('sInput')];
+            inputs.forEach(input => input.disabled = false);
+            
+            const btn = document.getElementById('focusBtn');
+            const status = document.getElementById('focusStatus');
+            
+            btn.textContent = 'ENGAGE';
+            status.textContent = 'READY';
+            status.classList.remove('animate-pulse', 'text-neon-pink');
+            status.classList.add('text-neon-cyan', 'animate-pulse');
+            
+            updateFocusDisplay(true);
+        }
+
         // ==========================================
-        // 3. SCRATCHPAD (NOTES)
+        // 4. SCRATCHPAD (NOTES)
         // ==========================================
         const notesArea = document.getElementById('quickNotes');
         notesArea.value = localStorage.getItem('aura_notes') || '';
         function saveNotes() { localStorage.setItem('aura_notes', notesArea.value); }
 
         // ==========================================
-        // 4. TASK MANAGER
+        // 5. TASK MANAGER
         // ==========================================
         let tasks = JSON.parse(localStorage.getItem('aura_tasks')) || [
             { text: "Finish GTA VI promo script", completed: false },
@@ -363,7 +569,10 @@
         function renderTasks() {
             const list = document.getElementById('taskList');
             list.innerHTML = tasks.length ? '' : `<div class="text-slate-400 text-xs text-center py-4">All clear!</div>`;
+            
+            let completedCount = 0;
             tasks.forEach((t, i) => {
+                if (t.completed) completedCount++;
                 list.innerHTML += `
                     <li class="group flex items-center justify-between p-3 bg-black/40 rounded-lg glow-hover cursor-pointer mb-2 border border-transparent" onclick="toggleTask(${i})">
                         <div class="flex items-center gap-3 overflow-hidden">
@@ -375,7 +584,12 @@
                         <button onclick="deleteTask(event, ${i})" class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-neon-pink text-xs ml-2 transition-all">✕</button>
                     </li>`;
             });
+
+            const progress = tasks.length ? Math.round((completedCount / tasks.length) * 100) : 0;
+            document.getElementById('taskProgressBar').style.width = `${progress}%`;
+            document.getElementById('taskProgressText').textContent = `${progress}%`;
         }
+
         function addTask() {
             const input = document.getElementById('taskInput');
             if (input.value.trim()) {
@@ -389,7 +603,7 @@
         document.getElementById('taskInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
 
         // ==========================================
-        // 5. ACADEMIC HUB (Timetable, Attendance, Exams)
+        // 6. ACADEMIC HUB (Timetable, Attendance, Exams)
         // ==========================================
         const schedule = [
             { time: "09:00 AM", course: "Adv. Eng. Mathematics", room: "NLH 201" },
@@ -400,7 +614,7 @@
         const ttList = document.getElementById('timetableList');
         schedule.forEach(slot => {
             ttList.innerHTML += `
-                <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20">
+                <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20 mb-2">
                     <div class="flex flex-col"><span class="font-semibold text-slate-200 text-xs">${slot.course}</span><span class="text-[10px] text-slate-400">${slot.room}</span></div>
                     <span class="text-[10px] font-bold text-neon-cyan bg-neon-cyan/10 px-2 py-1 rounded">${slot.time}</span>
                 </li>`;
@@ -425,7 +639,7 @@
                             <span class="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">${item.course}</span>
                             <span class="text-xs font-bold ${textClass}">${pct}%</span>
                         </div>
-                        <div class="w-full bg-black/50 rounded-full h-1.5 overflow-hidden">
+                        <div class="w-full bg-black/50 rounded-full h-1.5 overflow-hidden border border-neon-cyan/20">
                             <div class="h-full transition-all duration-500 ${colorClass}" style="width: ${pct}%"></div>
                         </div>
                         <div class="text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to log +1 class (${item.att}/${item.tot})</div>
@@ -457,7 +671,7 @@
         function delExam(i) { exams.splice(i, 1); localStorage.setItem('aura_exams', JSON.stringify(exams)); renderExams(); }
 
         // ==========================================
-        // 6. ASSIGNMENTS TRACKER
+        // 7. ASSIGNMENTS TRACKER
         // ==========================================
         let assigns = JSON.parse(localStorage.getItem('aura_assigns')) || [];
         function renderAssigns() {
