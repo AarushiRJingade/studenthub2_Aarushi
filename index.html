@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudentHub | Executive Workspace</title>
-    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,16 +18,8 @@
                         mono: ['JetBrains Mono', 'monospace']
                     },
                     colors: {
-                        sapphire: {
-                            900: '#0B132B',
-                            800: '#111C3A',
-                            700: '#1A2B56',
-                        },
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        }
+                        sapphire: { 900: '#0B132B', 800: '#111C3A', 700: '#1A2B56' },
+                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
                     },
                     boxShadow: {
                         'elegant': '0 10px 40px -10px rgba(0,0,0,0.5)',
@@ -41,7 +31,6 @@
     </script>
 
     <style>
-        /* Ambient Executive Background */
         body {
             margin: 0;
             background: linear-gradient(135deg, #050914, #0B132B, #111C3A, #050914);
@@ -58,49 +47,23 @@
         }
 
         #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            mix-blend-mode: screen;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none; mix-blend-mode: screen;
         }
 
-        /* Premium Frosted Glass Panels */
         .glass-card {
             background: rgba(17, 28, 58, 0.4);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(245, 158, 11, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
-        /* Smooth Navigation Transitions */
-        #nav-highlight {
-            transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-        }
+        #nav-highlight { transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1); }
+        .nav-section { transition: all 0.4s ease-out; }
+        .slide-in { animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(15px); }
+        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
 
-        .nav-section {
-            transition: all 0.4s ease-out;
-        }
-
-        .slide-in {
-            animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Interactive Hover States */
-        .elegant-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        .elegant-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .elegant-hover:hover {
             box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15);
             border-color: rgba(245, 158, 11, 0.4);
@@ -108,43 +71,31 @@
             transform: translateY(-2px);
         }
 
-        /* Input Resets */
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        
-        /* Gold Scrollbars */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
         
         input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
-            filter: invert(1) sepia(1) saturate(5) hue-rotate(345deg); 
-            cursor: pointer; opacity: 0.8; 
-        }
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1) sepia(1) saturate(5) hue-rotate(345deg); cursor: pointer; opacity: 0.8; }
         input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
     </style>
 </head>
 <body class="font-sans min-h-screen pb-12 selection:bg-gold-500 selection:text-sapphire-900 pt-24 text-slate-200">
 
-    <!-- Floating Gold Embers Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- FLOATING EXECUTIVE NAVIGATION BAR -->
+    <!-- NAVIGATION -->
     <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-elegant border-gold-500/30">
-        <!-- Moving Gold Highlight Pill -->
         <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none" style="left: 6px; width: 110px;"></div>
-
-        <!-- Buttons -->
         <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 px-6 py-2 text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide">Dashboard</button>
-        <button onclick="moveNav(this, 'focus')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Focus Mode</button>
         <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Academics</button>
         <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Projects & Events</button>
     </nav>
 
-    <!-- Main Workspace -->
-    <div class="max-w-[1300px] mx-auto relative z-10 p-4 md:p-8 lg:p-10">
+    <div class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-10">
         
         <!-- Header -->
         <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gold-500/20 pb-8 slide-in" style="animation-delay: 0.1s;">
@@ -161,9 +112,6 @@
                 <div class="text-sm font-medium text-slate-300 bg-sapphire-800/50 px-4 py-2 rounded-xl border border-sapphire-700 shadow-sm backdrop-blur-sm">
                     <span id="clockDisplay">00:00:00</span>
                 </div>
-                <div class="text-sm font-medium text-emerald-400 bg-emerald-900/30 px-4 py-2 rounded-xl border border-emerald-500/30 shadow-sm flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> System Online
-                </div>
             </div>
         </header>
 
@@ -171,26 +119,108 @@
         <div id="section-dashboard" class="nav-section opacity-100 translate-y-0">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
                 
-                <!-- Left: Master Scratchpad -->
+                <!-- Left Column (Span 7) -->
                 <div class="lg:col-span-7 flex flex-col gap-8">
+                    
+                    <!-- NEW: FOCUS TRACKER WIDGET -->
+                    <div class="glass-card p-6 md:p-8 rounded-3xl shadow-elegant flex flex-col xl:flex-row gap-8 items-center xl:items-start slide-in" style="animation-delay: 0.15s;">
+                        
+                        <!-- Left Pane: Timer Engine -->
+                        <div class="flex flex-col items-center relative w-full xl:w-1/2">
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-gold-500/5 rounded-full blur-[50px] pointer-events-none animate-pulse"></div>
+                            
+                            <div class="flex gap-3 mb-6 z-10">
+                                <div class="flex flex-col items-center">
+                                    <input type="number" id="hInput" value="0" min="0" max="99" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Hrs</span>
+                                </div>
+                                <div class="text-2xl text-slate-500 font-light mt-3">:</div>
+                                <div class="flex flex-col items-center">
+                                    <input type="number" id="mInput" value="25" min="0" max="59" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Min</span>
+                                </div>
+                                <div class="text-2xl text-slate-500 font-light mt-3">:</div>
+                                <div class="flex flex-col items-center">
+                                    <input type="number" id="sInput" value="0" min="0" max="59" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Sec</span>
+                                </div>
+                            </div>
+
+                            <div class="relative flex items-center justify-center mb-6 z-10">
+                                <svg class="w-[220px] h-[220px] transform -rotate-90 drop-shadow-lg">
+                                    <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" />
+                                    <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#elegantGradient)" stroke-width="6" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
+                                    <defs>
+                                        <linearGradient id="elegantGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#fbbf24" />
+                                            <stop offset="100%" stop-color="#d97706" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none">
+                                    <span id="focusDisplay" class="text-3xl font-mono font-bold text-white tracking-tight drop-shadow-md">00:25:00</span>
+                                    <span id="focusStatus" class="text-gold-400 text-[10px] font-bold tracking-widest mt-2 uppercase">Ready</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 w-full z-10">
+                                <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 py-2.5 rounded-xl hover:opacity-90 transition-all font-bold text-xs active:scale-95 shadow-gold-glow uppercase tracking-widest">Start</button>
+                                <button onclick="resetFocusTimer()" class="bg-sapphire-900/60 border border-gold-500/30 text-gold-400 hover:bg-sapphire-800 px-4 py-2.5 rounded-xl transition-all font-bold text-xs active:scale-95 uppercase tracking-widest">Reset</button>
+                            </div>
+                        </div>
+
+                        <!-- Right Pane: Telemetry & Logging -->
+                        <div class="flex flex-col w-full xl:w-1/2 bg-sapphire-900/30 p-5 rounded-2xl border border-gold-500/10">
+                            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-widest">
+                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                Session Telemetry
+                            </h3>
+                            
+                            <!-- Contextual Datalist Input -->
+                            <div class="mb-4">
+                                <label class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5 block">Subject / Label</label>
+                                <input list="subjectSuggestions" id="sessionSubject" class="w-full bg-sapphire-900/60 border border-gold-500/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold-400 shadow-sm transition-all" placeholder="e.g. Multivariable Calculus">
+                                <datalist id="subjectSuggestions">
+                                    <option value="Circuit Analysis">
+                                    <option value="Multivariable Calculus">
+                                    <option value="Digital Content Creation">
+                                    <option value="Advanced Engineering Math">
+                                </datalist>
+                            </div>
+                            
+                            <button onclick="logSessionManual()" class="w-full bg-sapphire-800 border border-gold-500/30 text-gold-400 py-2 rounded-lg hover:bg-gold-500 hover:text-sapphire-900 transition-colors font-bold text-xs uppercase tracking-widest mb-5">Log Current Time</button>
+
+                            <div class="border-t border-gold-500/10 pt-4 flex-grow flex flex-col">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-xs font-bold text-slate-300">Today's Sessions:</span>
+                                    <span id="totalSessionsCount" class="text-xs font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded">0</span>
+                                </div>
+                                <ul id="subjectStatsList" class="space-y-2 overflow-y-auto max-h-[120px] pr-1">
+                                    <!-- Dynamic Stats Injected Here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Scratchpad -->
                     <div class="glass-card p-8 rounded-3xl flex flex-col flex-grow slide-in shadow-elegant" style="animation-delay: 0.2s;">
                         <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
                             <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             Master Scratchpad
                         </h2>
-                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow min-h-[400px] bg-sapphire-900/50 border border-gold-500/20 rounded-2xl p-6 text-slate-200 leading-relaxed focus:outline-none focus:border-gold-500 focus:bg-sapphire-800/80 focus:ring-1 focus:ring-gold-500/50 transition-all resize-none shadow-inner" placeholder="Draft ideas, paste links, or outline your day here..."></textarea>
+                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow min-h-[300px] bg-sapphire-900/50 border border-gold-500/20 rounded-2xl p-6 text-slate-200 leading-relaxed focus:outline-none focus:border-gold-500 focus:bg-sapphire-800/80 focus:ring-1 focus:ring-gold-500/50 transition-all resize-none shadow-inner" placeholder="Draft equations, paste links, or outline circuit models here..."></textarea>
                     </div>
                 </div>
 
-                <!-- Right: Action Items -->
+                <!-- Right Column (Span 5): Action Items & Deadlines -->
                 <div class="lg:col-span-5 flex flex-col gap-8">
+                    <!-- Action Items -->
                     <div class="glass-card p-8 rounded-3xl flex-grow slide-in shadow-elegant" style="animation-delay: 0.3s;">
                         <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
                             <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                             Action Items
                         </h2>
                         
-                        <!-- Progress Bar -->
                         <div class="mb-6 bg-sapphire-900/50 border border-gold-500/10 p-4 rounded-2xl">
                             <div class="flex justify-between text-xs font-semibold mb-2 text-slate-400 uppercase tracking-widest">
                                 <span>Daily Completion</span>
@@ -205,71 +235,13 @@
                             <input type="text" id="taskInput" class="bg-sapphire-900/50 border border-gold-500/20 rounded-xl px-4 py-3 flex-grow text-sm text-white focus:outline-none focus:border-gold-400 focus:bg-sapphire-800/80 transition-all placeholder-slate-500 shadow-sm" placeholder="Add a new task...">
                             <button onclick="addTask()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-5 py-3 rounded-xl hover:opacity-90 transition-all font-bold shadow-gold-glow active:scale-95">+</button>
                         </div>
-                        
-                        <ul id="taskList" class="space-y-3 max-h-[320px] overflow-y-auto pr-1"></ul>
+                        <ul id="taskList" class="space-y-3 max-h-[350px] overflow-y-auto pr-1"></ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SECTION 2: FOCUS MODE (ELEGANT TIMER) -->
-        <div id="section-focus" class="nav-section hidden opacity-0 translate-y-4">
-            <div class="flex flex-col items-center justify-center min-h-[65vh] glass-card p-8 md:p-16 rounded-[3rem] relative overflow-hidden shadow-elegant border-gold-500/20">
-                
-                <!-- Internal Gold Aura -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/5 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
-
-                <h2 class="text-3xl font-bold text-white mb-10 flex items-center gap-3 z-10 tracking-tight">
-                    <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Executive Focus
-                </h2>
-
-                <!-- Custom Time Inputs -->
-                <div class="flex gap-6 mb-12 z-10">
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="hInput" value="0" min="0" max="99" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
-                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Hours</span>
-                    </div>
-                    <div class="text-4xl text-slate-500 font-light self-start mt-6">:</div>
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="mInput" value="25" min="0" max="59" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
-                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Minutes</span>
-                    </div>
-                    <div class="text-4xl text-slate-500 font-light self-start mt-6">:</div>
-                    <div class="flex flex-col items-center">
-                        <input type="number" id="sInput" value="0" min="0" max="59" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
-                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Seconds</span>
-                    </div>
-                </div>
-
-                <!-- Animated SVG Progress Ring -->
-                <div class="relative flex items-center justify-center mb-12 z-10">
-                    <svg class="w-[340px] h-[340px] md:w-[420px] md:h-[420px] transform -rotate-90 drop-shadow-lg">
-                        <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" />
-                        <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#elegantGradient)" stroke-width="8" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
-                        <defs>
-                            <linearGradient id="elegantGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#fbbf24" />
-                                <stop offset="100%" stop-color="#d97706" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <!-- Display -->
-                    <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none">
-                        <span id="focusDisplay" class="text-5xl md:text-7xl font-mono font-bold text-white tracking-tight drop-shadow-md">00:25:00</span>
-                        <span id="focusStatus" class="text-gold-400 text-xs font-bold tracking-widest mt-4 uppercase">Awaiting Start</span>
-                    </div>
-                </div>
-
-                <!-- Controls -->
-                <div class="flex gap-5 w-full max-w-md z-10">
-                    <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 py-4 rounded-2xl hover:opacity-90 transition-all font-bold text-sm active:scale-95 shadow-gold-glow tracking-widest uppercase">Start Session</button>
-                    <button onclick="resetFocusTimer()" class="bg-sapphire-900/60 border border-gold-500/30 text-gold-400 hover:bg-sapphire-800 px-8 py-4 rounded-2xl transition-all font-bold text-sm active:scale-95 shadow-sm tracking-widest uppercase">Reset</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 3: ACADEMICS -->
+        <!-- SECTION 2: ACADEMICS -->
         <div id="section-academics" class="nav-section hidden opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
                 <!-- Academic Hub -->
@@ -332,17 +304,16 @@
             </div>
         </div>
 
-        <!-- SECTION 4: PROJECTS & EVENTS -->
+        <!-- SECTION 3: PROJECTS & EVENTS -->
         <div id="section-events" class="nav-section hidden opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <!-- Current Projects -->
                 <div class="glass-card p-8 rounded-3xl shadow-elegant">
                     <h2 class="text-2xl font-bold text-white mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
                         <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                        Active Portfolios
+                        Active Portfolios[cite: 1]
                     </h2>
                     <div class="space-y-6">
-                        <!-- Project 1 -->
                         <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Video Production</span>
@@ -350,22 +321,14 @@
                             </div>
                             <h3 class="text-lg font-bold text-white mb-2">AI Video Automation Script</h3>
                             <p class="text-sm text-slate-400 mb-5 leading-relaxed">30-second AI-generated promotional video sequence utilizing Descript text-to-video tools.</p>
-                            <div class="grid grid-cols-2 gap-3 text-xs font-medium text-slate-300">
-                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-gold-500 font-bold">✓</span> Hook Setup</div>
-                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-gold-500 font-bold">✓</span> Graphics & World</div>
-                                <div class="bg-sapphire-800 p-2.5 rounded-lg border border-gold-400 flex items-center gap-2 shadow-sm text-gold-300"><span class="animate-pulse">⏳</span> Action & Chaos</div>
-                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-slate-500">○</span> Call to Action</div>
-                            </div>
                         </div>
-                        
-                        <!-- Project 2 -->
                         <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="bg-slate-800 text-slate-300 border border-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Web Dev</span>
                                 <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-600">PLANNING</span>
                             </div>
                             <h3 class="text-lg font-bold text-white mb-2">Carbon Footprint Platform</h3>
-                            <p class="text-sm text-slate-400 leading-relaxed">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
+                            <p class="text-sm text-slate-400 leading-relaxed">Full-stack web application designed for the PromptWars virtual challenge.</p>
                         </div>
                     </div>
                 </div>
@@ -387,26 +350,6 @@
                                 <p class="text-xs text-slate-400 mt-1">Hackathon - Registration confirmed.</p>
                             </div>
                         </div>
-                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
-                                <span class="text-[9px] font-bold uppercase tracking-widest">Feb</span>
-                                <span class="text-lg font-bold leading-none">20</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-white text-base">Revels 2026</h3>
-                                <p class="text-xs text-slate-400 mt-1">Multi-day university community festival.</p>
-                            </div>
-                        </div>
-                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
-                                <span class="text-[9px] font-bold uppercase tracking-widest">Mar</span>
-                                <span class="text-lg font-bold leading-none">15</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-white text-base">MAHE Fest 2026</h3>
-                                <p class="text-xs text-slate-400 mt-1">Parent university grand festival.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -423,6 +366,7 @@
             const activeBtn = document.querySelector('.active-nav');
             if (activeBtn) moveNav(activeBtn, 'dashboard', true);
             updateFocusDisplay(true);
+            renderFocusStats();
         });
 
         function moveNav(element, sectionId, isInitial = false) {
@@ -473,7 +417,7 @@
         const ctx = canvas.getContext('2d');
         let particles = [];
         let width, height;
-        const colors = ['#fbbf24', '#f59e0b', '#d97706']; // Gold palette
+        const colors = ['#fbbf24', '#f59e0b', '#d97706'];
 
         function initCanvas() {
             width = canvas.width = window.innerWidth; 
@@ -517,12 +461,14 @@
         initCanvas(); drawCanvas();
 
         // ==========================================
-        // 3. ELEGANT FOCUS TIMER LOGIC
+        // 3. EPIC FOCUS TIMER & TELEMETRY LOGIC
         // ==========================================
         let focusInterval;
         let focusTotalTime = 1500;
         let focusTimeLeft = 1500;
         let isFocusRunning = false;
+        
+        let focusLogs = JSON.parse(localStorage.getItem('exec_focus_logs')) || [];
         
         const ring = document.getElementById('focusRing');
         const radius = ring.r.baseVal.value;
@@ -565,7 +511,7 @@
 
             if (isFocusRunning) {
                 clearInterval(focusInterval);
-                btn.textContent = 'RESUME SESSION';
+                btn.textContent = 'RESUME';
                 status.textContent = 'PAUSED';
                 status.classList.remove('animate-pulse', 'text-gold-500');
                 status.classList.add('text-slate-400');
@@ -585,7 +531,8 @@
                         focusTimeLeft--; 
                         updateFocusDisplay(); 
                     } else { 
-                        resetFocusTimer(); 
+                        clearInterval(focusInterval);
+                        logSessionComplete();
                         alert("Focus session complete! Excellent work."); 
                     }
                 }, 1000);
@@ -603,12 +550,69 @@
             const btn = document.getElementById('focusBtn');
             const status = document.getElementById('focusStatus');
             
-            btn.textContent = 'START SESSION';
+            btn.textContent = 'START';
             status.textContent = 'READY';
             status.classList.remove('animate-pulse', 'text-gold-500');
             status.classList.add('text-gold-400');
             
             updateFocusDisplay(true);
+        }
+
+        function logSessionComplete() {
+            // Logs the full time automatically upon reaching 0
+            processSessionLog(focusTotalTime);
+            resetFocusTimer();
+        }
+
+        function logSessionManual() {
+            // Logs whatever time has elapsed before reset
+            if (focusTotalTime === focusTimeLeft) return; // Nothing to log
+            const elapsed = focusTotalTime - focusTimeLeft;
+            if (elapsed < 60) {
+                alert("Sessions under 1 minute are not recorded.");
+                return;
+            }
+            processSessionLog(elapsed);
+            resetFocusTimer();
+        }
+
+        function processSessionLog(seconds) {
+            const minutes = Math.round(seconds / 60);
+            const subject = document.getElementById('sessionSubject').value.trim() || 'General Focus';
+            const today = new Date().toDateString();
+
+            focusLogs.push({ date: today, subject: subject, minutes: minutes });
+            localStorage.setItem('exec_focus_logs', JSON.stringify(focusLogs));
+            renderFocusStats();
+        }
+
+        function renderFocusStats() {
+            const list = document.getElementById('subjectStatsList');
+            const countLabel = document.getElementById('totalSessionsCount');
+            const today = new Date().toDateString();
+            
+            const todayLogs = focusLogs.filter(log => log.date === today);
+            countLabel.textContent = todayLogs.length;
+
+            if (todayLogs.length === 0) {
+                list.innerHTML = `<li class="text-slate-500 text-[10px] text-center py-3 border border-dashed border-gold-500/20 rounded">No sessions logged today.</li>`;
+                return;
+            }
+
+            // Aggregate minutes per subject
+            const subjectTotals = {};
+            todayLogs.forEach(log => {
+                subjectTotals[log.subject] = (subjectTotals[log.subject] || 0) + log.minutes;
+            });
+
+            list.innerHTML = '';
+            Object.entries(subjectTotals).forEach(([subject, mins]) => {
+                list.innerHTML += `
+                    <li class="flex items-center justify-between p-2 bg-sapphire-900/40 rounded border border-gold-500/10 mb-1.5">
+                        <span class="text-xs text-slate-300 font-semibold truncate w-[70%]">${subject}</span>
+                        <span class="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/20">${mins} min</span>
+                    </li>`;
+            });
         }
 
         // ==========================================
