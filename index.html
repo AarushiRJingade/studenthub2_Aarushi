@@ -82,10 +82,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
         
-        /* Hide scrollbar for mobile nav horizontal scroll */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
             filter: invert(1) sepia(1) saturate(5) hue-rotate(345deg); 
@@ -102,15 +98,23 @@
         }
     </style>
 </head>
-<body class="font-sans min-h-screen pb-12 selection:bg-gold-500 selection:text-sapphire-900 pt-24 md:pt-28 text-slate-200">
+<body class="font-sans min-h-screen pb-12 pt-24 md:pt-28 selection:bg-gold-500 selection:text-sapphire-900 text-slate-200">
 
     <canvas id="bg-canvas"></canvas>
 
-    <nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-elegant border-gold-500/30 w-[95%] max-w-fit overflow-x-auto hide-scrollbar scroll-smooth">
+    <nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center justify-between w-[92%] sm:w-[85%] md:w-auto max-w-none slide-in shadow-elegant border-gold-500/30">
         <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none" style="left: 6px; width: 110px;"></div>
-        <button onclick="moveNav(this, 'dashboard')" aria-label="Dashboard Section" class="nav-btn active-nav relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide whitespace-nowrap">Dashboard</button>
-        <button onclick="moveNav(this, 'academics')" aria-label="Academics Section" class="nav-btn relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide whitespace-nowrap">Academics</button>
-        <button onclick="moveNav(this, 'events')" aria-label="Projects and Events Section" class="nav-btn relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide whitespace-nowrap">Projects & Events</button>
+        
+        <button onclick="moveNav(this, 'dashboard')" aria-label="Dashboard Section" class="nav-btn active-nav relative z-10 flex-1 md:flex-none px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide text-center">
+            Dashboard
+        </button>
+        <button onclick="moveNav(this, 'academics')" aria-label="Academics Section" class="nav-btn relative z-10 flex-1 md:flex-none px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide text-center">
+            Academics
+        </button>
+        <button onclick="moveNav(this, 'events')" aria-label="Projects and Events Section" class="nav-btn relative z-10 flex-1 md:flex-none px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide text-center">
+            <span class="md:hidden">Events</span>
+            <span class="hidden md:inline">Projects & Events</span>
+        </button>
     </nav>
 
     <main class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-10 w-full overflow-x-hidden">
@@ -380,7 +384,7 @@
 
     <script>
         // ==========================================
-        // 1. NAVIGATION LOGIC (Mobile Adjusted)
+        // 1. NAVIGATION LOGIC (Responsive Top Navbar)
         // ==========================================
         let currentActiveNavElement = null;
 
@@ -392,7 +396,6 @@
             renderNotes();
         });
 
-        // Recalculate slider position if device is rotated or resized
         window.addEventListener('resize', () => {
             if (currentActiveNavElement) moveNav(currentActiveNavElement, null, true);
         });
@@ -402,12 +405,11 @@
             const highlight = document.getElementById('nav-highlight');
             const navContainer = element.parentElement;
             
-            // Adjust calculation based on scroll position for mobile overflow nav
             const containerRect = navContainer.getBoundingClientRect();
             const elementRect = element.getBoundingClientRect();
             
             highlight.style.width = `${elementRect.width}px`;
-            highlight.style.left = `${elementRect.left - containerRect.left + navContainer.scrollLeft}px`;
+            highlight.style.left = `${elementRect.left - containerRect.left}px`;
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('text-sapphire-900', 'active-nav');
