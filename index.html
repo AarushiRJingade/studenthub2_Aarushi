@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentHub | Ultimate Workspace</title>
+    <title>StudentHub | Executive Workspace</title>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,11 +20,20 @@
                         mono: ['JetBrains Mono', 'monospace']
                     },
                     colors: {
-                        neon: {
-                            pink: '#ff007f',
-                            cyan: '#00f0ff',
-                            purple: '#b026ff'
+                        sapphire: {
+                            900: '#0B132B',
+                            800: '#111C3A',
+                            700: '#1A2B56',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
                         }
+                    },
+                    boxShadow: {
+                        'elegant': '0 10px 40px -10px rgba(0,0,0,0.5)',
+                        'gold-glow': '0 0 20px rgba(245, 158, 11, 0.3)'
                     }
                 }
             }
@@ -30,16 +41,17 @@
     </script>
 
     <style>
+        /* Ambient Executive Background */
         body {
             margin: 0;
-            background: linear-gradient(-45deg, #090514, #1b0033, #3a005c, #001a33);
-            background-size: 400% 400%;
-            animation: auraFlow 15s ease infinite;
+            background: linear-gradient(135deg, #050914, #0B132B, #111C3A, #050914);
+            background-size: 300% 300%;
+            animation: elegantFlow 20s ease infinite;
             overflow-x: hidden;
-            color: #e2e8f0;
+            color: #f8fafc;
         }
 
-        @keyframes auraFlow {
+        @keyframes elegantFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -56,18 +68,18 @@
             mix-blend-mode: screen;
         }
 
-        /* Glassmorphism Cards */
+        /* Premium Frosted Glass Panels */
         .glass-card {
-            background: rgba(15, 10, 25, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            background: rgba(17, 28, 58, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
-        /* Nav Highlight Animation */
+        /* Smooth Navigation Transitions */
         #nav-highlight {
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .nav-section {
@@ -77,209 +89,240 @@
         .slide-in {
             animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(15px);
         }
 
         @keyframes slideIn {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .glow-hover {
+        /* Interactive Hover States */
+        .elegant-hover {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .glow-hover:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
-            border-color: rgba(0, 240, 255, 0.6);
-            background-color: rgba(30, 20, 50, 0.8);
+        .elegant-hover:hover {
+            box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            background-color: rgba(26, 43, 86, 0.6);
             transform: translateY(-2px);
         }
 
-        /* Remove arrows from number inputs */
+        /* Input Resets */
         input[type="number"]::-webkit-inner-spin-button, 
-        input[type="number"]::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Gold Scrollbars */
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff007f; }
+        ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
         
         input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-            filter: invert(1) hue-rotate(180deg);
-            cursor: pointer;
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(345deg); 
+            cursor: pointer; opacity: 0.8; 
         }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
     </style>
 </head>
-<body class="font-sans min-h-screen pb-12 selection:bg-neon-pink selection:text-white pt-24">
+<body class="font-sans min-h-screen pb-12 selection:bg-gold-500 selection:text-sapphire-900 pt-24 text-slate-200">
 
+    <!-- Floating Gold Embers Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-[0_15px_35px_rgba(0,0,0,0.5)] border-neon-cyan/40 backdrop-blur-xl">
-        <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-neon-cyan/20 to-neon-pink/20 border border-neon-cyan/60 rounded-full shadow-[0_0_15px_rgba(0,240,255,0.4)] pointer-events-none" style="left: 6px; width: 110px;"></div>
+    <!-- FLOATING EXECUTIVE NAVIGATION BAR -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-elegant border-gold-500/30">
+        <!-- Moving Gold Highlight Pill -->
+        <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none" style="left: 6px; width: 110px;"></div>
 
-        <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 px-6 py-2.5 text-sm font-bold text-white drop-shadow-[0_0_8px_#fff] transition-colors rounded-full">Dashboard</button>
-        <button onclick="moveNav(this, 'focus')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Focus Mode</button>
-        <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Academics</button>
-        <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 px-6 py-2.5 text-sm font-bold text-slate-400 hover:text-white transition-colors rounded-full">Projects & Events</button>
+        <!-- Buttons -->
+        <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 px-6 py-2 text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide">Dashboard</button>
+        <button onclick="moveNav(this, 'focus')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Focus Mode</button>
+        <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Academics</button>
+        <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Projects & Events</button>
     </nav>
 
-    <div class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-12">
+    <!-- Main Workspace -->
+    <div class="max-w-[1300px] mx-auto relative z-10 p-4 md:p-8 lg:p-10">
         
-        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-neon-cyan/20 pb-6 slide-in" style="animation-delay: 0.2s;">
-            <div class="flex items-center gap-6">
-                <div class="w-20 h-20 rounded-2xl bg-black/50 border-2 border-neon-cyan flex items-center justify-center shadow-[0_0_20px_rgba(0,240,255,0.4)]">
-                    <span class="text-3xl">👨‍💻</span>
+        <!-- Header -->
+        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gold-500/20 pb-8 slide-in" style="animation-delay: 0.1s;">
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-2xl bg-sapphire-800 border border-gold-500/40 flex items-center justify-center shadow-gold-glow">
+                    <svg class="w-8 h-8 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                 </div>
                 <div>
-                    <h1 class="text-4xl font-bold tracking-tight text-white mb-1">StudentHub</h1>
-                    <p class="text-neon-pink font-medium tracking-wide text-sm uppercase">Computer Science • Manipal Institute of Technology</p>
+                    <h1 class="text-3xl font-bold tracking-tight text-white mb-1">StudentHub Workspace</h1>
+                    <p class="text-gold-400 font-medium tracking-widest text-xs uppercase">Manipal Institute of Technology</p>
                 </div>
             </div>
             <div class="mt-6 md:mt-0 flex gap-3">
-                <div class="text-sm font-semibold text-slate-300 bg-black/40 px-4 py-2 rounded-lg border border-neon-cyan/30">
+                <div class="text-sm font-medium text-slate-300 bg-sapphire-800/50 px-4 py-2 rounded-xl border border-sapphire-700 shadow-sm backdrop-blur-sm">
                     <span id="clockDisplay">00:00:00</span>
                 </div>
-                <div class="text-sm font-semibold text-neon-cyan bg-neon-cyan/10 px-4 py-2 rounded-lg border border-neon-cyan/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-                    Status: Online
+                <div class="text-sm font-medium text-emerald-400 bg-emerald-900/30 px-4 py-2 rounded-xl border border-emerald-500/30 shadow-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> System Online
                 </div>
             </div>
         </header>
 
+        <!-- SECTION 1: DASHBOARD -->
         <div id="section-dashboard" class="nav-section opacity-100 translate-y-0">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+                
+                <!-- Left: Master Scratchpad -->
                 <div class="lg:col-span-7 flex flex-col gap-8">
-                    <div class="glass-card p-6 rounded-2xl flex flex-col flex-grow slide-in" style="animation-delay: 0.3s;">
-                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <span class="text-neon-pink">📝</span> Master Scratchpad
+                    <div class="glass-card p-8 rounded-3xl flex flex-col flex-grow slide-in shadow-elegant" style="animation-delay: 0.2s;">
+                        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            Master Scratchpad
                         </h2>
-                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow min-h-[400px] bg-black/40 border border-neon-cyan/30 rounded-xl p-6 text-lg text-slate-200 focus:outline-none focus:border-neon-pink focus:shadow-[0_0_15px_rgba(255,0,127,0.3)] transition-all resize-none" placeholder="Draft ideas, paste links, or outline scripts here..."></textarea>
+                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow min-h-[400px] bg-sapphire-900/50 border border-gold-500/20 rounded-2xl p-6 text-slate-200 leading-relaxed focus:outline-none focus:border-gold-500 focus:bg-sapphire-800/80 focus:ring-1 focus:ring-gold-500/50 transition-all resize-none shadow-inner" placeholder="Draft ideas, paste links, or outline your day here..."></textarea>
                     </div>
                 </div>
 
+                <!-- Right: Action Items -->
                 <div class="lg:col-span-5 flex flex-col gap-8">
-                    <div class="glass-card p-6 rounded-2xl flex-grow slide-in" style="animation-delay: 0.4s;">
-                        <h2 class="text-xl font-bold text-white mb-4 border-b border-neon-cyan/20 pb-4 flex items-center gap-2">
-                            <span class="text-neon-cyan">✅</span> Action Items
+                    <div class="glass-card p-8 rounded-3xl flex-grow slide-in shadow-elegant" style="animation-delay: 0.3s;">
+                        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                            Action Items
                         </h2>
-                        <div class="mb-5">
-                            <div class="flex justify-between text-xs font-bold mb-2">
-                                <span class="text-slate-300">Completion Rate</span>
-                                <span id="taskProgressText" class="text-neon-pink drop-shadow-[0_0_5px_#ff007f]">0%</span>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-6 bg-sapphire-900/50 border border-gold-500/10 p-4 rounded-2xl">
+                            <div class="flex justify-between text-xs font-semibold mb-2 text-slate-400 uppercase tracking-widest">
+                                <span>Daily Completion</span>
+                                <span id="taskProgressText" class="text-gold-400">0%</span>
                             </div>
-                            <div class="w-full bg-black/60 rounded-full h-2 overflow-hidden border border-neon-cyan/20">
-                                <div id="taskProgressBar" class="h-full bg-gradient-to-r from-neon-cyan to-neon-pink transition-all duration-500 shadow-[0_0_10px_#ff007f]" style="width: 0%"></div>
+                            <div class="w-full bg-sapphire-800 rounded-full h-1.5 overflow-hidden">
+                                <div id="taskProgressBar" class="h-full bg-gradient-to-r from-gold-600 to-gold-400 transition-all duration-700 ease-out shadow-gold-glow" style="width: 0%"></div>
                             </div>
                         </div>
-                        <div class="flex gap-2 mb-6 group">
-                            <input type="text" id="taskInput" class="bg-black/40 border border-neon-cyan/30 rounded-xl px-4 py-2 flex-grow text-sm text-white focus:outline-none focus:border-neon-pink transition-all placeholder-slate-400" placeholder="Initialize task...">
-                            <button onclick="addTask()" class="bg-neon-cyan text-black px-4 py-2 rounded-xl hover:bg-white hover:shadow-[0_0_15px_#00f0ff] transition-all font-bold active:scale-95">+</button>
+
+                        <div class="flex gap-3 mb-6">
+                            <input type="text" id="taskInput" class="bg-sapphire-900/50 border border-gold-500/20 rounded-xl px-4 py-3 flex-grow text-sm text-white focus:outline-none focus:border-gold-400 focus:bg-sapphire-800/80 transition-all placeholder-slate-500 shadow-sm" placeholder="Add a new task...">
+                            <button onclick="addTask()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-5 py-3 rounded-xl hover:opacity-90 transition-all font-bold shadow-gold-glow active:scale-95">+</button>
                         </div>
-                        <ul id="taskList" class="space-y-2 max-h-[350px] overflow-y-auto pr-2"></ul>
+                        
+                        <ul id="taskList" class="space-y-3 max-h-[320px] overflow-y-auto pr-1"></ul>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- SECTION 2: FOCUS MODE (ELEGANT TIMER) -->
         <div id="section-focus" class="nav-section hidden opacity-0 translate-y-4">
-            <div class="flex flex-col items-center justify-center min-h-[60vh] glass-card p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden border-neon-cyan/50 shadow-[0_0_40px_rgba(0,240,255,0.15)]">
+            <div class="flex flex-col items-center justify-center min-h-[65vh] glass-card p-8 md:p-16 rounded-[3rem] relative overflow-hidden shadow-elegant border-gold-500/20">
                 
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/20 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
+                <!-- Internal Gold Aura -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/5 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
 
-                <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3 z-10 drop-shadow-[0_0_10px_#ff007f]">
-                    <span class="text-neon-cyan text-4xl">🧿</span> Deep Focus
+                <h2 class="text-3xl font-bold text-white mb-10 flex items-center gap-3 z-10 tracking-tight">
+                    <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Executive Focus
                 </h2>
 
-                <div class="flex gap-4 md:gap-6 mb-12 z-10">
+                <!-- Custom Time Inputs -->
+                <div class="flex gap-6 mb-12 z-10">
                     <div class="flex flex-col items-center">
-                        <input type="number" id="hInput" value="0" min="0" max="99" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
-                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Hours</span>
+                        <input type="number" id="hInput" value="0" min="0" max="99" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
+                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Hours</span>
                     </div>
-                    <div class="text-5xl text-white font-bold self-start mt-4 drop-shadow-[0_0_10px_#fff]">:</div>
+                    <div class="text-4xl text-slate-500 font-light self-start mt-6">:</div>
                     <div class="flex flex-col items-center">
-                        <input type="number" id="mInput" value="25" min="0" max="59" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
-                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Minutes</span>
+                        <input type="number" id="mInput" value="25" min="0" max="59" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
+                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Minutes</span>
                     </div>
-                    <div class="text-5xl text-white font-bold self-start mt-4 drop-shadow-[0_0_10px_#fff]">:</div>
+                    <div class="text-4xl text-slate-500 font-light self-start mt-6">:</div>
                     <div class="flex flex-col items-center">
-                        <input type="number" id="sInput" value="0" min="0" max="59" class="w-20 h-20 text-center text-4xl font-mono font-bold bg-black/60 border-2 border-neon-cyan/50 text-white rounded-2xl focus:outline-none focus:border-neon-pink focus:shadow-[0_0_20px_#ff007f] transition-all" />
-                        <span class="text-xs text-neon-cyan font-bold mt-3 tracking-widest uppercase">Seconds</span>
+                        <input type="number" id="sInput" value="0" min="0" max="59" class="w-24 h-24 text-center text-4xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-2xl focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 transition-all shadow-sm" />
+                        <span class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest uppercase">Seconds</span>
                     </div>
                 </div>
 
+                <!-- Animated SVG Progress Ring -->
                 <div class="relative flex items-center justify-center mb-12 z-10">
-                    <svg class="w-[340px] h-[340px] md:w-[400px] md:h-[400px] transform -rotate-90 drop-shadow-[0_0_25px_rgba(0,240,255,0.5)]">
-                        <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" />
-                        <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#neonGradient)" stroke-width="12" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
+                    <svg class="w-[340px] h-[340px] md:w-[420px] md:h-[420px] transform -rotate-90 drop-shadow-lg">
+                        <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" />
+                        <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#elegantGradient)" stroke-width="8" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
                         <defs>
-                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#00f0ff" />
-                                <stop offset="100%" stop-color="#ff007f" />
+                            <linearGradient id="elegantGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fbbf24" />
+                                <stop offset="100%" stop-color="#d97706" />
                             </linearGradient>
                         </defs>
                     </svg>
+                    <!-- Display -->
                     <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none">
-                        <span id="focusDisplay" class="text-5xl md:text-7xl font-mono font-bold text-white tracking-wider drop-shadow-[0_0_20px_rgba(255,0,127,0.8)]">00:25:00</span>
-                        <span id="focusStatus" class="text-neon-cyan text-sm font-bold tracking-widest mt-4 uppercase">Awaiting Start</span>
+                        <span id="focusDisplay" class="text-5xl md:text-7xl font-mono font-bold text-white tracking-tight drop-shadow-md">00:25:00</span>
+                        <span id="focusStatus" class="text-gold-400 text-xs font-bold tracking-widest mt-4 uppercase">Awaiting Start</span>
                     </div>
                 </div>
 
-                <div class="flex gap-4 w-full max-w-lg z-10">
-                    <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-neon-cyan to-neon-pink text-white py-5 rounded-2xl hover:opacity-90 transition-all font-bold text-2xl active:scale-95 shadow-[0_0_25px_rgba(255,0,127,0.5)] tracking-widest uppercase">ENGAGE</button>
-                    <button onclick="resetFocusTimer()" class="bg-black/50 border border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan hover:text-black px-10 py-5 rounded-2xl transition-all font-bold text-xl active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.2)] tracking-widest uppercase">RESET</button>
+                <!-- Controls -->
+                <div class="flex gap-5 w-full max-w-md z-10">
+                    <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 py-4 rounded-2xl hover:opacity-90 transition-all font-bold text-sm active:scale-95 shadow-gold-glow tracking-widest uppercase">Start Session</button>
+                    <button onclick="resetFocusTimer()" class="bg-sapphire-900/60 border border-gold-500/30 text-gold-400 hover:bg-sapphire-800 px-8 py-4 rounded-2xl transition-all font-bold text-sm active:scale-95 shadow-sm tracking-widest uppercase">Reset</button>
                 </div>
             </div>
         </div>
 
+        <!-- SECTION 3: ACADEMICS -->
         <div id="section-academics" class="nav-section hidden opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-                <div class="lg:col-span-8 glass-card p-8 rounded-2xl">
-                    <div class="flex items-center gap-3 mb-6 border-b border-neon-cyan/20 pb-4">
-                        <span class="text-2xl">🎓</span>
-                        <h2 class="text-2xl font-bold text-white">Live Tracking Hub</h2>
+                <!-- Academic Hub -->
+                <div class="lg:col-span-8 glass-card p-8 rounded-3xl shadow-elegant">
+                    <div class="flex items-center gap-3 mb-8 border-b border-gold-500/20 pb-4">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <h2 class="text-2xl font-bold text-white">Academic Overview</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
-                            <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_8px_#00f0ff]"></span> Schedule
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-sapphire-900/40 rounded-2xl p-6 border border-gold-500/10">
+                            <h3 class="text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-gold-500"></span> Today's Schedule
                             </h3>
                             <ul id="timetableList" class="space-y-3"></ul>
                         </div>
-                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
-                            <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <span class="text-neon-pink">📈</span> Live Attendance
+                        <div class="bg-sapphire-900/40 rounded-2xl p-6 border border-gold-500/10">
+                            <h3 class="text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                Attendance Telemetry
                             </h3>
-                            <ul id="attendanceList" class="space-y-4"></ul>
+                            <ul id="attendanceList" class="space-y-5"></ul>
                         </div>
                     </div>
                 </div>
 
+                <!-- Right Side: Exams & Deadlines -->
                 <div class="lg:col-span-4 flex flex-col gap-8">
-                    <div class="glass-card p-6 rounded-2xl flex flex-col">
-                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <span class="text-neon-cyan">📝</span> Exam Booking
+                    <!-- Exam Slots -->
+                    <div class="glass-card p-6 rounded-3xl flex flex-col shadow-elegant">
+                        <h3 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Exam Registration
                         </h3>
                         <div class="flex flex-col gap-3 mb-4">
-                            <input type="text" id="examTitle" class="bg-black/50 border border-neon-cyan/30 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink text-sm" placeholder="Exam Name (e.g. MTH201)">
-                            <input type="datetime-local" id="examDate" class="bg-black/50 border border-neon-cyan/30 text-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink text-sm">
-                            <button onclick="bookExam()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all font-semibold active:scale-95">Lock Slot</button>
+                            <input type="text" id="examTitle" class="bg-sapphire-900/50 border border-gold-500/20 text-white rounded-xl px-4 py-2.5 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm" placeholder="Subject / Exam Name">
+                            <input type="datetime-local" id="examDate" class="bg-sapphire-900/50 border border-gold-500/20 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm">
+                            <button onclick="bookExam()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 hover:opacity-90 px-4 py-2.5 rounded-xl transition-all font-bold text-sm active:scale-95 shadow-gold-glow mt-1">Book Slot</button>
                         </div>
-                        <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[150px] pr-1"></ul>
+                        <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[160px] pr-1"></ul>
                     </div>
 
-                    <div class="glass-card p-6 rounded-2xl">
-                        <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <span class="text-neon-pink">🔥</span> Deadlines
+                    <!-- Deadlines -->
+                    <div class="glass-card p-6 rounded-3xl shadow-elegant">
+                        <h2 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Upcoming Deadlines
                         </h2>
-                        <div class="bg-black/30 rounded-xl p-4 border border-neon-cyan/20 mb-4">
+                        <div class="bg-sapphire-900/40 border border-gold-500/10 rounded-2xl p-4 mb-4">
                             <div class="flex flex-col gap-3">
-                                <input type="text" id="courseInput" class="bg-black/50 border border-neon-cyan/30 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink placeholder-slate-400" placeholder="Course & Title">
+                                <input type="text" id="courseInput" class="bg-sapphire-800/50 border border-gold-500/20 text-white text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-400 placeholder-slate-400 shadow-sm" placeholder="Course & Title">
                                 <div class="flex gap-2 items-center">
-                                    <input type="date" id="dateInput" class="w-full bg-black/50 border border-neon-cyan/30 text-slate-300 text-sm rounded-lg px-2 py-2 focus:outline-none focus:border-neon-pink">
-                                    <button onclick="addAssignment()" class="bg-neon-cyan text-black hover:bg-white hover:shadow-[0_0_15px_#00f0ff] px-4 py-2 rounded-lg transition-all text-sm font-bold active:scale-95">Add</button>
+                                    <input type="date" id="dateInput" class="w-full bg-sapphire-800/50 border border-gold-500/20 text-slate-300 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-400 shadow-sm">
+                                    <button onclick="addAssignment()" class="bg-gold-500 text-sapphire-900 hover:bg-gold-400 px-5 py-2.5 rounded-xl transition-all text-sm font-bold active:scale-95 shadow-sm">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -289,61 +332,79 @@
             </div>
         </div>
 
+        <!-- SECTION 4: PROJECTS & EVENTS -->
         <div id="section-events" class="nav-section hidden opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="glass-card p-8 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-neon-cyan/20 pb-4 flex items-center gap-3">
-                        <span class="text-neon-cyan">🚀</span> Active Projects
+                <!-- Current Projects -->
+                <div class="glass-card p-8 rounded-3xl shadow-elegant">
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        Active Portfolios
                     </h2>
                     <div class="space-y-6">
-                        <div class="bg-black/40 border border-neon-cyan/30 rounded-xl p-5 glow-hover cursor-default">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="bg-neon-pink/20 text-neon-pink border border-neon-pink/50 text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase">Video Production</span>
-                                <span class="text-xs font-mono text-neon-cyan">IN PROGRESS</span>
+                        <!-- Project 1 -->
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Video Production</span>
+                                <span class="text-xs font-mono text-emerald-400 bg-emerald-900/30 px-2 py-1 rounded border border-emerald-500/30">IN PROGRESS</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Grand Theft Auto VI Promo</h3>
-                            <p class="text-sm text-slate-400 mb-4">30-second AI-generated promotional video sequence utilizing Descript text-to-video AI tools.</p>
-                            <div class="grid grid-cols-2 gap-2 text-xs font-medium text-slate-300">
-                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-neon-cyan">✓</span> Hook Setup</div>
-                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-neon-cyan">✓</span> Graphics & World</div>
-                                <div class="bg-black/50 p-2 rounded flex items-center gap-2 border border-neon-pink/30"><span class="animate-pulse">⏳</span> Action & Chaos</div>
-                                <div class="bg-black/50 p-2 rounded flex items-center gap-2"><span class="text-slate-600">○</span> Call to Action</div>
+                            <h3 class="text-lg font-bold text-white mb-2">AI Video Automation Script</h3>
+                            <p class="text-sm text-slate-400 mb-5 leading-relaxed">30-second AI-generated promotional video sequence utilizing Descript text-to-video tools.</p>
+                            <div class="grid grid-cols-2 gap-3 text-xs font-medium text-slate-300">
+                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-gold-500 font-bold">✓</span> Hook Setup</div>
+                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-gold-500 font-bold">✓</span> Graphics & World</div>
+                                <div class="bg-sapphire-800 p-2.5 rounded-lg border border-gold-400 flex items-center gap-2 shadow-sm text-gold-300"><span class="animate-pulse">⏳</span> Action & Chaos</div>
+                                <div class="bg-sapphire-800/50 p-2.5 rounded-lg border border-gold-500/10 flex items-center gap-2"><span class="text-slate-500">○</span> Call to Action</div>
                             </div>
                         </div>
-                        <div class="bg-black/40 border border-neon-cyan/30 rounded-xl p-5 glow-hover cursor-default">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="bg-neon-cyan/20 text-neon-cyan border border-neon-cyan/50 text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase">Web Dev</span>
-                                <span class="text-xs font-mono text-slate-400">PLANNING</span>
+                        
+                        <!-- Project 2 -->
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-slate-800 text-slate-300 border border-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Web Dev</span>
+                                <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-600">PLANNING</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Carbon Footprint Awareness</h3>
-                            <p class="text-sm text-slate-400">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
+                            <h3 class="text-lg font-bold text-white mb-2">Carbon Footprint Platform</h3>
+                            <p class="text-sm text-slate-400 leading-relaxed">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-neon-cyan/20 pb-4 flex items-center gap-3">
-                        <span class="text-neon-pink">🎟️</span> Campus Events
+                <!-- Campus Events -->
+                <div class="glass-card p-8 rounded-3xl shadow-elegant">
+                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        University Events
                     </h2>
                     <div class="space-y-4">
-                        <div class="bg-black/40 border border-neon-pink/30 rounded-xl p-4 flex items-center gap-4 glow-hover cursor-pointer transition-all">
-                            <div class="w-12 h-12 rounded-lg bg-neon-pink/20 border border-neon-pink/50 flex flex-col items-center justify-center flex-shrink-0 text-neon-pink">
-                                <span class="text-[10px] font-bold uppercase tracking-wider">Early</span>
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex flex-col items-center justify-center flex-shrink-0 text-gold-400">
+                                <span class="text-[9px] font-bold uppercase tracking-widest">Early</span>
                                 <span class="text-lg font-bold leading-none">'26</span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-lg">FrostHack 2026</h3>
-                                <p class="text-xs text-slate-400">Hackathon - Registration confirmed.</p>
+                                <h3 class="font-bold text-white text-base">FrostHack 2026</h3>
+                                <p class="text-xs text-slate-400 mt-1">Hackathon - Registration confirmed.</p>
                             </div>
                         </div>
-                        <div class="bg-black/40 border border-slate-700 rounded-xl p-4 flex items-center gap-4 glow-hover cursor-pointer transition-all hover:border-neon-cyan/50">
-                            <div class="w-12 h-12 rounded-lg bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
-                                <span class="text-[10px] font-bold uppercase tracking-wider">Feb</span>
+                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
+                                <span class="text-[9px] font-bold uppercase tracking-widest">Feb</span>
                                 <span class="text-lg font-bold leading-none">20</span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-lg">Revels 2026</h3>
-                                <p class="text-xs text-slate-400">Multi-day university community festival.</p>
+                                <h3 class="font-bold text-white text-base">Revels 2026</h3>
+                                <p class="text-xs text-slate-400 mt-1">Multi-day university community festival.</p>
+                            </div>
+                        </div>
+                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
+                                <span class="text-[9px] font-bold uppercase tracking-widest">Mar</span>
+                                <span class="text-lg font-bold leading-none">15</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-base">MAHE Fest 2026</h3>
+                                <p class="text-xs text-slate-400 mt-1">Parent university grand festival.</p>
                             </div>
                         </div>
                     </div>
@@ -353,14 +414,15 @@
 
     </div>
 
+    <!-- ALL JAVASCRIPT LOGIC -->
     <script>
         // ==========================================
-        // 1. NAVIGATION LOGIC (The Sliding Pill)
+        // 1. NAVIGATION LOGIC (The Sliding Gold Pill)
         // ==========================================
         window.addEventListener('load', () => {
             const activeBtn = document.querySelector('.active-nav');
             if (activeBtn) moveNav(activeBtn, 'dashboard', true);
-            updateFocusDisplay(true); // Initialize the timer SVG
+            updateFocusDisplay(true);
         });
 
         function moveNav(element, sectionId, isInitial = false) {
@@ -374,11 +436,11 @@
             highlight.style.left = `${elementRect.left - containerRect.left}px`;
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-white', 'drop-shadow-[0_0_8px_#fff]', 'active-nav');
+                btn.classList.remove('text-sapphire-900', 'active-nav');
                 btn.classList.add('text-slate-400');
             });
             element.classList.remove('text-slate-400');
-            element.classList.add('text-white', 'drop-shadow-[0_0_8px_#fff]', 'active-nav');
+            element.classList.add('text-sapphire-900', 'active-nav');
 
             if (!isInitial) {
                 document.querySelectorAll('.nav-section').forEach(sec => {
@@ -399,27 +461,34 @@
             }
         }
 
+        // Live Header Clock
+        setInterval(() => {
+            document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+        }, 1000);
+
         // ==========================================
-        // 2. CRAZY AURA ANIMATION
+        // 2. AMBIENT CANVAS ANIMATION (Gold Embers)
         // ==========================================
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         let width, height;
-        const colors = ['#00f0ff', '#ff007f', '#b026ff'];
+        const colors = ['#fbbf24', '#f59e0b', '#d97706']; // Gold palette
 
         function initCanvas() {
             width = canvas.width = window.innerWidth; 
             height = canvas.height = window.innerHeight;
             particles = [];
-            const particleCount = Math.floor((width * height) / 10000);
+            const particleCount = Math.floor((width * height) / 15000);
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
-                    x: Math.random() * width, y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() * -0.5) - 0.2,
-                    radius: Math.random() * 2.5 + 1,
+                    x: Math.random() * width, 
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.15, 
+                    vy: (Math.random() * -0.2) - 0.1,
+                    radius: Math.random() * 2 + 0.5,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    alpha: Math.random() * 0.5 + 0.3
+                    alpha: Math.random() * 0.4 + 0.1
                 });
             }
         }
@@ -435,7 +504,7 @@
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                 ctx.fillStyle = p.color;
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 10;
                 ctx.shadowColor = p.color;
                 ctx.globalAlpha = p.alpha;
                 ctx.fill();
@@ -447,19 +516,14 @@
         window.addEventListener('resize', initCanvas);
         initCanvas(); drawCanvas();
 
-        setInterval(() => {
-            document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
-        }, 1000);
-
         // ==========================================
-        // 3. EPIC FOCUS TIMER LOGIC
+        // 3. ELEGANT FOCUS TIMER LOGIC
         // ==========================================
         let focusInterval;
-        let focusTotalTime = 1500; // 25 mins default
+        let focusTotalTime = 1500;
         let focusTimeLeft = 1500;
         let isFocusRunning = false;
         
-        // Dynamically calculate the SVG circle circumference
         const ring = document.getElementById('focusRing');
         const radius = ring.r.baseVal.value;
         const circumference = radius * 2 * Math.PI;
@@ -484,12 +548,10 @@
             
             document.getElementById('focusDisplay').textContent = `${h}:${m}:${s}`;
             
-            // Calculate and apply SVG ring offset
             const offset = focusTotalTime > 0 ? circumference - (focusTimeLeft / focusTotalTime) * circumference : 0;
             ring.style.strokeDashoffset = offset;
         }
 
-        // Add listeners to update ring immediately when user types
         ['hInput', 'mInput', 'sInput'].forEach(id => {
             document.getElementById(id).addEventListener('input', () => {
                 if (!isFocusRunning) updateFocusDisplay(true);
@@ -502,22 +564,20 @@
             const inputs = [document.getElementById('hInput'), document.getElementById('mInput'), document.getElementById('sInput')];
 
             if (isFocusRunning) {
-                // Pause
                 clearInterval(focusInterval);
-                btn.textContent = 'RESUME';
+                btn.textContent = 'RESUME SESSION';
                 status.textContent = 'PAUSED';
-                status.classList.remove('animate-pulse', 'text-neon-pink');
-                status.classList.add('text-neon-cyan');
+                status.classList.remove('animate-pulse', 'text-gold-500');
+                status.classList.add('text-slate-400');
                 inputs.forEach(input => input.disabled = false);
             } else {
-                // Start
                 if (focusTimeLeft === focusTotalTime) updateFocusDisplay(true);
-                if (focusTimeLeft <= 0) return; // Don't start if 0
+                if (focusTimeLeft <= 0) return;
 
                 inputs.forEach(input => input.disabled = true);
                 status.textContent = 'SESSION ACTIVE';
-                status.classList.add('animate-pulse', 'text-neon-pink');
-                status.classList.remove('text-neon-cyan');
+                status.classList.add('animate-pulse', 'text-gold-500');
+                status.classList.remove('text-slate-400');
                 btn.textContent = 'PAUSE';
                 
                 focusInterval = setInterval(() => {
@@ -526,7 +586,7 @@
                         updateFocusDisplay(); 
                     } else { 
                         resetFocusTimer(); 
-                        alert("Focus session complete! Time to rest."); 
+                        alert("Focus session complete! Excellent work."); 
                     }
                 }, 1000);
             }
@@ -543,45 +603,45 @@
             const btn = document.getElementById('focusBtn');
             const status = document.getElementById('focusStatus');
             
-            btn.textContent = 'ENGAGE';
+            btn.textContent = 'START SESSION';
             status.textContent = 'READY';
-            status.classList.remove('animate-pulse', 'text-neon-pink');
-            status.classList.add('text-neon-cyan', 'animate-pulse');
+            status.classList.remove('animate-pulse', 'text-gold-500');
+            status.classList.add('text-gold-400');
             
             updateFocusDisplay(true);
         }
 
         // ==========================================
-        // 4. SCRATCHPAD (NOTES)
+        // 4. MASTER SCRATCHPAD LOGIC
         // ==========================================
         const notesArea = document.getElementById('quickNotes');
-        notesArea.value = localStorage.getItem('aura_notes') || '';
-        function saveNotes() { localStorage.setItem('aura_notes', notesArea.value); }
+        notesArea.value = localStorage.getItem('exec_notes') || '';
+        function saveNotes() { localStorage.setItem('exec_notes', notesArea.value); }
 
         // ==========================================
         // 5. TASK MANAGER
         // ==========================================
-        let tasks = JSON.parse(localStorage.getItem('aura_tasks')) || [
-            { text: "Finish GTA VI promo script", completed: false },
-            { text: "Log Strava workout", completed: true }
+        let tasks = JSON.parse(localStorage.getItem('exec_tasks')) || [
+            { text: "Finish AI Video Automation script", completed: false },
+            { text: "Review Advanced Engineering Mathematics", completed: true }
         ];
 
         function renderTasks() {
             const list = document.getElementById('taskList');
-            list.innerHTML = tasks.length ? '' : `<div class="text-slate-400 text-xs text-center py-4">All clear!</div>`;
+            list.innerHTML = tasks.length ? '' : `<div class="text-slate-500 text-xs text-center py-6 border border-dashed border-gold-500/20 rounded-xl">Inbox zero. Excellent.</div>`;
             
             let completedCount = 0;
             tasks.forEach((t, i) => {
                 if (t.completed) completedCount++;
                 list.innerHTML += `
-                    <li class="group flex items-center justify-between p-3 bg-black/40 rounded-lg glow-hover cursor-pointer mb-2 border border-transparent" onclick="toggleTask(${i})">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <div class="w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors ${t.completed ? 'bg-neon-cyan border-neon-cyan' : 'border-slate-500'}">
-                                ${t.completed ? '<span class="text-black text-[10px] font-bold">✓</span>' : ''}
+                    <li class="group flex items-center justify-between p-3.5 bg-sapphire-900/40 border border-gold-500/10 rounded-xl elegant-hover cursor-pointer mb-2.5" onclick="toggleTask(${i})">
+                        <div class="flex items-center gap-3.5 overflow-hidden">
+                            <div class="w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors ${t.completed ? 'bg-gold-500 border-gold-500' : 'border-slate-500'}">
+                                ${t.completed ? '<svg class="w-2.5 h-2.5 text-sapphire-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
                             </div>
-                            <span class="text-sm truncate transition-colors ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span>
+                            <span class="text-sm truncate transition-colors font-medium ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span>
                         </div>
-                        <button onclick="deleteTask(event, ${i})" class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-neon-pink text-xs ml-2 transition-all">✕</button>
+                        <button onclick="deleteTask(event, ${i})" class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs ml-2 transition-all">✕</button>
                     </li>`;
             });
 
@@ -594,16 +654,16 @@
             const input = document.getElementById('taskInput');
             if (input.value.trim()) {
                 tasks.push({ text: input.value.trim(), completed: false });
-                localStorage.setItem('aura_tasks', JSON.stringify(tasks));
+                localStorage.setItem('exec_tasks', JSON.stringify(tasks));
                 input.value = ''; renderTasks();
             }
         }
-        function toggleTask(i) { tasks[i].completed = !tasks[i].completed; localStorage.setItem('aura_tasks', JSON.stringify(tasks)); renderTasks(); }
-        function deleteTask(e, i) { e.stopPropagation(); tasks.splice(i, 1); localStorage.setItem('aura_tasks', JSON.stringify(tasks)); renderTasks(); }
+        function toggleTask(i) { tasks[i].completed = !tasks[i].completed; localStorage.setItem('exec_tasks', JSON.stringify(tasks)); renderTasks(); }
+        function deleteTask(e, i) { e.stopPropagation(); tasks.splice(i, 1); localStorage.setItem('exec_tasks', JSON.stringify(tasks)); renderTasks(); }
         document.getElementById('taskInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
 
         // ==========================================
-        // 6. ACADEMIC HUB (Timetable, Attendance, Exams)
+        // 6. ACADEMIC HUB 
         // ==========================================
         const schedule = [
             { time: "09:00 AM", course: "Adv. Eng. Mathematics", room: "NLH 201" },
@@ -614,13 +674,13 @@
         const ttList = document.getElementById('timetableList');
         schedule.forEach(slot => {
             ttList.innerHTML += `
-                <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20 mb-2">
-                    <div class="flex flex-col"><span class="font-semibold text-slate-200 text-xs">${slot.course}</span><span class="text-[10px] text-slate-400">${slot.room}</span></div>
-                    <span class="text-[10px] font-bold text-neon-cyan bg-neon-cyan/10 px-2 py-1 rounded">${slot.time}</span>
+                <li class="flex items-center justify-between p-3 bg-sapphire-800/40 border border-gold-500/10 rounded-xl mb-2.5 shadow-sm">
+                    <div class="flex flex-col"><span class="font-bold text-slate-200 text-xs">${slot.course}</span><span class="text-[10px] text-slate-400 mt-0.5">${slot.room}</span></div>
+                    <span class="text-[10px] font-bold text-gold-400 bg-gold-500/10 border border-gold-500/20 px-2.5 py-1 rounded-md tracking-wide">${slot.time}</span>
                 </li>`;
         });
 
-        let attendance = JSON.parse(localStorage.getItem('aura_attendance')) || [
+        let attendance = JSON.parse(localStorage.getItem('exec_attendance')) || [
             { course: "MTH201: Calculus", att: 22, tot: 25 },
             { course: "EE101: Circuits", att: 18, tot: 24 },
             { course: "CS101: Fundamentals", att: 28, tot: 28 }
@@ -631,59 +691,59 @@
             list.innerHTML = '';
             attendance.forEach((item, i) => {
                 const pct = Math.round((item.att / item.tot) * 100);
-                const colorClass = pct >= 75 ? 'bg-neon-cyan shadow-[0_0_10px_#00f0ff]' : 'bg-neon-pink shadow-[0_0_10px_#ff007f]';
-                const textClass = pct >= 75 ? 'text-neon-cyan' : 'text-neon-pink';
+                const colorClass = pct >= 75 ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-rose-500 shadow-[0_0_8px_#f43f5e]';
+                const textClass = pct >= 75 ? 'text-emerald-400' : 'text-rose-400';
                 list.innerHTML += `
-                    <li class="cursor-pointer group" onclick="logAttendance(${i})">
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">${item.course}</span>
+                    <li class="cursor-pointer group bg-sapphire-800/40 p-4 rounded-xl border border-gold-500/10 shadow-sm elegant-hover" onclick="logAttendance(${i})">
+                        <div class="flex justify-between items-end mb-2.5">
+                            <span class="text-xs font-bold text-slate-200">${item.course}</span>
                             <span class="text-xs font-bold ${textClass}">${pct}%</span>
                         </div>
-                        <div class="w-full bg-black/50 rounded-full h-1.5 overflow-hidden border border-neon-cyan/20">
+                        <div class="w-full bg-sapphire-900 rounded-full h-1.5 overflow-hidden">
                             <div class="h-full transition-all duration-500 ${colorClass}" style="width: ${pct}%"></div>
                         </div>
-                        <div class="text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to log +1 class (${item.att}/${item.tot})</div>
+                        <div class="text-[10px] text-slate-500 font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Click to log class (${item.att}/${item.tot})</div>
                     </li>`;
             });
         }
-        function logAttendance(i) { attendance[i].att++; attendance[i].tot++; localStorage.setItem('aura_attendance', JSON.stringify(attendance)); renderAttendance(); }
+        function logAttendance(i) { attendance[i].att++; attendance[i].tot++; localStorage.setItem('exec_attendance', JSON.stringify(attendance)); renderAttendance(); }
 
-        let exams = JSON.parse(localStorage.getItem('aura_exams')) || [];
+        let exams = JSON.parse(localStorage.getItem('exec_exams')) || [];
         function renderExams() {
             const list = document.getElementById('bookedExamsList');
-            list.innerHTML = exams.length ? '' : `<div class="text-slate-400 text-xs py-2">No booked exams.</div>`;
+            list.innerHTML = exams.length ? '' : `<div class="text-slate-500 text-xs py-4 text-center border border-dashed border-gold-500/20 rounded-xl">No active bookings.</div>`;
             exams.forEach((exam, i) => {
                 list.innerHTML += `
-                    <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20 mb-2">
+                    <li class="flex items-center justify-between p-3 bg-sapphire-900/40 border border-gold-500/10 rounded-xl mb-2 shadow-sm elegant-hover">
                         <div class="flex flex-col overflow-hidden">
-                            <span class="font-semibold text-slate-200 text-xs truncate">${exam.title}</span>
-                            <span class="text-[10px] text-neon-pink">${new Date(exam.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</span>
+                            <span class="font-bold text-slate-200 text-xs truncate">${exam.title}</span>
+                            <span class="text-[10px] font-medium text-gold-400 mt-0.5">${new Date(exam.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</span>
                         </div>
-                        <button onclick="delExam(${i})" class="text-slate-500 hover:text-neon-pink text-xs p-1">✕</button>
+                        <button onclick="delExam(${i})" class="text-slate-500 hover:text-rose-400 bg-sapphire-800/50 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs transition-colors">✕</button>
                     </li>`;
             });
         }
         function bookExam() {
             const title = document.getElementById('examTitle').value;
             const date = document.getElementById('examDate').value;
-            if (title && date) { exams.push({ title, date }); localStorage.setItem('aura_exams', JSON.stringify(exams)); renderExams(); }
+            if (title && date) { exams.push({ title, date }); localStorage.setItem('exec_exams', JSON.stringify(exams)); renderExams(); }
         }
-        function delExam(i) { exams.splice(i, 1); localStorage.setItem('aura_exams', JSON.stringify(exams)); renderExams(); }
+        function delExam(i) { exams.splice(i, 1); localStorage.setItem('exec_exams', JSON.stringify(exams)); renderExams(); }
 
         // ==========================================
         // 7. ASSIGNMENTS TRACKER
         // ==========================================
-        let assigns = JSON.parse(localStorage.getItem('aura_assigns')) || [];
+        let assigns = JSON.parse(localStorage.getItem('exec_assigns')) || [];
         function renderAssigns() {
             const list = document.getElementById('assignmentList');
-            list.innerHTML = assigns.length ? '' : `<div class="text-slate-400 text-xs py-2 text-center">No active deadlines.</div>`;
+            list.innerHTML = assigns.length ? '' : `<div class="text-slate-500 text-xs py-4 text-center border border-dashed border-gold-500/20 rounded-xl">No pending deadlines.</div>`;
             assigns.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach((a, i) => {
                 list.innerHTML += `
-                    <li class="flex items-center justify-between p-3 bg-black/40 rounded-lg border border-transparent mb-2 glow-hover">
-                        <span class="text-sm text-slate-200 truncate w-1/2">${a.course}</span>
+                    <li class="flex items-center justify-between p-3.5 bg-sapphire-900/40 border border-gold-500/10 rounded-xl mb-2.5 shadow-sm elegant-hover">
+                        <span class="text-sm font-semibold text-slate-200 truncate w-[55%]">${a.course}</span>
                         <div class="flex items-center gap-3">
-                            <span class="text-[10px] font-bold text-black bg-neon-pink shadow-[0_0_8px_#ff007f] px-2 py-1 rounded">${new Date(a.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>
-                            <button onclick="delAssign(${i})" class="text-slate-500 hover:text-neon-pink text-xs">✕</button>
+                            <span class="text-[10px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2.5 py-1 rounded-md shadow-[0_0_8px_rgba(244,63,94,0.3)]">${new Date(a.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>
+                            <button onclick="delAssign(${i})" class="text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs transition-colors">✕</button>
                         </div>
                     </li>`;
             });
@@ -691,9 +751,9 @@
         function addAssignment() {
             const course = document.getElementById('courseInput').value;
             const date = document.getElementById('dateInput').value;
-            if(course && date) { assigns.push({course, date}); localStorage.setItem('aura_assigns', JSON.stringify(assigns)); renderAssigns(); }
+            if(course && date) { assigns.push({course, date}); localStorage.setItem('exec_assigns', JSON.stringify(assigns)); renderAssigns(); }
         }
-        function delAssign(i) { assigns.splice(i, 1); localStorage.setItem('aura_assigns', JSON.stringify(assigns)); renderAssigns(); }
+        function delAssign(i) { assigns.splice(i, 1); localStorage.setItem('exec_assigns', JSON.stringify(assigns)); renderAssigns(); }
 
         // Initialize Everything
         renderTasks(); renderAttendance(); renderExams(); renderAssigns();
