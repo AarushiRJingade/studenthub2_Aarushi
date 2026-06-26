@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>StudentHub | Executive Workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,11 +77,15 @@
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         
-        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
         
+        /* Hide scrollbar for mobile nav horizontal scroll */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
         input[type="date"]::-webkit-calendar-picker-indicator,
         input[type="datetime-local"]::-webkit-calendar-picker-indicator { 
             filter: invert(1) sepia(1) saturate(5) hue-rotate(345deg); 
@@ -98,67 +102,67 @@
         }
     </style>
 </head>
-<body class="font-sans min-h-screen pb-12 selection:bg-gold-500 selection:text-sapphire-900 pt-24 text-slate-200">
+<body class="font-sans min-h-screen pb-12 selection:bg-gold-500 selection:text-sapphire-900 pt-24 md:pt-28 text-slate-200">
 
     <canvas id="bg-canvas"></canvas>
 
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-elegant border-gold-500/30">
+    <nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-1.5 flex items-center relative slide-in shadow-elegant border-gold-500/30 w-[95%] max-w-fit overflow-x-auto hide-scrollbar scroll-smooth">
         <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none" style="left: 6px; width: 110px;"></div>
-        <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 px-6 py-2 text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide">Dashboard</button>
-        <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Academics</button>
-        <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide">Projects & Events</button>
+        <button onclick="moveNav(this, 'dashboard')" aria-label="Dashboard Section" class="nav-btn active-nav relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide whitespace-nowrap">Dashboard</button>
+        <button onclick="moveNav(this, 'academics')" aria-label="Academics Section" class="nav-btn relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide whitespace-nowrap">Academics</button>
+        <button onclick="moveNav(this, 'events')" aria-label="Projects and Events Section" class="nav-btn relative z-10 px-5 md:px-6 py-2.5 md:py-2 text-xs md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide whitespace-nowrap">Projects & Events</button>
     </nav>
 
-    <div class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-10">
+    <main class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-10 w-full overflow-x-hidden">
         
-        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gold-500/20 pb-8 slide-in" style="animation-delay: 0.1s;">
-            <div class="flex items-center gap-5">
-                <div class="w-16 h-16 rounded-2xl bg-sapphire-800 border border-gold-500/40 flex items-center justify-center shadow-gold-glow">
-                    <svg class="w-8 h-8 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        <header class="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gold-500/20 pb-6 md:pb-8 slide-in" style="animation-delay: 0.1s;">
+            <div class="flex items-center gap-4 md:gap-5">
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-sapphire-800 border border-gold-500/40 flex items-center justify-center shadow-gold-glow flex-shrink-0">
+                    <svg class="w-6 h-6 md:w-8 md:h-8 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                 </div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-white mb-1">StudentHub Workspace</h1>
-                    <p class="text-gold-400 font-medium tracking-widest text-xs uppercase">Manipal Institute of Technology</p>
+                    <h1 class="text-xl md:text-3xl font-bold tracking-tight text-white mb-1">StudentHub Workspace</h1>
+                    <p class="text-gold-400 font-medium tracking-widest text-[9px] md:text-xs uppercase">Manipal Institute of Technology</p>
                 </div>
             </div>
-            <div class="mt-6 md:mt-0 flex gap-3">
-                <div class="text-sm font-medium text-slate-300 bg-sapphire-800/50 px-4 py-2 rounded-xl border border-sapphire-700 shadow-sm backdrop-blur-sm">
+            <div class="mt-4 md:mt-0 flex gap-3 self-start md:self-auto w-full md:w-auto">
+                <div class="text-sm font-medium text-slate-300 bg-sapphire-800/50 px-4 py-2 rounded-xl border border-sapphire-700 shadow-sm backdrop-blur-sm w-full md:w-auto text-center" aria-live="polite">
                     <span id="clockDisplay">00:00:00</span>
                 </div>
             </div>
         </header>
 
-        <div id="section-dashboard" class="nav-section opacity-100 translate-y-0">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+        <section id="section-dashboard" class="nav-section opacity-100 translate-y-0 w-full" aria-label="Dashboard">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 mb-8 w-full">
                 
-                <div class="lg:col-span-7 flex flex-col gap-8">
+                <div class="lg:col-span-7 flex flex-col gap-6 md:gap-8 w-full">
                     
-                    <div class="glass-card p-6 md:p-8 rounded-3xl shadow-elegant flex flex-col xl:flex-row gap-8 items-center xl:items-start slide-in" style="animation-delay: 0.15s;">
+                    <div class="glass-card p-5 md:p-8 rounded-3xl shadow-elegant flex flex-col xl:flex-row gap-8 items-center xl:items-start slide-in w-full" style="animation-delay: 0.15s;">
                         
                         <div class="flex flex-col items-center relative w-full xl:w-1/2">
-                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-gold-500/5 rounded-full blur-[50px] pointer-events-none animate-pulse"></div>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] md:w-[200px] h-[150px] md:h-[200px] bg-gold-500/5 rounded-full blur-[50px] pointer-events-none animate-pulse"></div>
                             
-                            <div class="flex gap-3 mb-6 z-10">
+                            <div class="flex gap-2 md:gap-3 mb-6 z-10">
                                 <div class="flex flex-col items-center">
-                                    <input type="number" id="hInput" value="0" min="0" max="99" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
-                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Hrs</span>
+                                    <input type="number" aria-label="Hours" id="hInput" value="0" min="0" max="99" class="w-12 h-12 md:w-14 md:h-14 text-center text-lg md:text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase" aria-hidden="true">Hrs</span>
                                 </div>
-                                <div class="text-2xl text-slate-500 font-light mt-3">:</div>
+                                <div class="text-xl md:text-2xl text-slate-500 font-light mt-2 md:mt-3">:</div>
                                 <div class="flex flex-col items-center">
-                                    <input type="number" id="mInput" value="25" min="0" max="59" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
-                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Min</span>
+                                    <input type="number" aria-label="Minutes" id="mInput" value="25" min="0" max="59" class="w-12 h-12 md:w-14 md:h-14 text-center text-lg md:text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase" aria-hidden="true">Min</span>
                                 </div>
-                                <div class="text-2xl text-slate-500 font-light mt-3">:</div>
+                                <div class="text-xl md:text-2xl text-slate-500 font-light mt-2 md:mt-3">:</div>
                                 <div class="flex flex-col items-center">
-                                    <input type="number" id="sInput" value="0" min="0" max="59" class="w-14 h-14 text-center text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
-                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase">Sec</span>
+                                    <input type="number" aria-label="Seconds" id="sInput" value="0" min="0" max="59" class="w-12 h-12 md:w-14 md:h-14 text-center text-lg md:text-xl font-mono font-bold bg-sapphire-900/60 border border-gold-500/30 text-gold-400 rounded-xl focus:outline-none focus:border-gold-400 shadow-sm transition-all" />
+                                    <span class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest uppercase" aria-hidden="true">Sec</span>
                                 </div>
                             </div>
 
-                            <div class="relative flex items-center justify-center mb-6 z-10">
-                                <svg class="w-[220px] h-[220px] transform -rotate-90 drop-shadow-lg">
-                                    <circle cx="50%" cy="50%" r="46%" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" />
-                                    <circle id="focusRing" cx="50%" cy="50%" r="46%" stroke="url(#elegantGradient)" stroke-width="6" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
+                            <div class="relative flex items-center justify-center mb-6 z-10 w-full max-w-[220px] aspect-square">
+                                <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 220 220">
+                                    <circle cx="110" cy="110" r="100" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="transparent" />
+                                    <circle id="focusRing" cx="110" cy="110" r="100" stroke="url(#elegantGradient)" stroke-width="6" fill="transparent" stroke-linecap="round" class="transition-all duration-1000 ease-linear" />
                                     <defs>
                                         <linearGradient id="elegantGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                             <stop offset="0%" stop-color="#fbbf24" />
@@ -166,27 +170,27 @@
                                         </linearGradient>
                                     </defs>
                                 </svg>
-                                <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none">
-                                    <span id="focusDisplay" class="text-3xl font-mono font-bold text-white tracking-tight drop-shadow-md">00:25:00</span>
-                                    <span id="focusStatus" class="text-gold-400 text-[10px] font-bold tracking-widest mt-2 uppercase">Ready</span>
+                                <div class="absolute text-center flex flex-col items-center justify-center pointer-events-none inset-0">
+                                    <span id="focusDisplay" aria-live="assertive" class="text-2xl md:text-3xl font-mono font-bold text-white tracking-tight drop-shadow-md">00:25:00</span>
+                                    <span id="focusStatus" class="text-gold-400 text-[9px] md:text-[10px] font-bold tracking-widest mt-1 md:mt-2 uppercase">Ready</span>
                                 </div>
                             </div>
 
-                            <div class="flex gap-3 w-full z-10">
-                                <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 py-2.5 rounded-xl hover:opacity-90 transition-all font-bold text-xs active:scale-95 shadow-gold-glow uppercase tracking-widest">Start</button>
-                                <button onclick="resetFocusTimer()" class="bg-sapphire-900/60 border border-gold-500/30 text-gold-400 hover:bg-sapphire-800 px-4 py-2.5 rounded-xl transition-all font-bold text-xs active:scale-95 uppercase tracking-widest">Reset</button>
+                            <div class="flex gap-3 w-full max-w-[220px] z-10">
+                                <button id="focusBtn" onclick="toggleFocusTimer()" class="flex-grow bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 py-3 md:py-2.5 rounded-xl hover:opacity-90 transition-all font-bold text-xs active:scale-95 shadow-gold-glow uppercase tracking-widest min-h-[44px]">Start</button>
+                                <button onclick="resetFocusTimer()" class="bg-sapphire-900/60 border border-gold-500/30 text-gold-400 hover:bg-sapphire-800 px-4 py-3 md:py-2.5 rounded-xl transition-all font-bold text-xs active:scale-95 uppercase tracking-widest min-h-[44px]">Reset</button>
                             </div>
                         </div>
 
-                        <div class="flex flex-col w-full xl:w-1/2 bg-sapphire-900/30 p-5 rounded-2xl border border-gold-500/10">
-                            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-widest">
-                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        <div class="flex flex-col w-full xl:w-1/2 bg-sapphire-900/30 p-4 md:p-5 rounded-2xl border border-gold-500/10">
+                            <h3 class="text-xs md:text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-widest">
+                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                                 Session Telemetry
                             </h3>
                             
                             <div class="mb-4">
-                                <label class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5 block">Subject / Label</label>
-                                <input list="subjectSuggestions" id="sessionSubject" class="w-full bg-sapphire-900/60 border border-gold-500/20 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold-400 shadow-sm transition-all" placeholder="e.g. Multivariable Calculus">
+                                <label for="sessionSubject" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1.5 block">Subject / Label</label>
+                                <input list="subjectSuggestions" id="sessionSubject" class="w-full bg-sapphire-900/60 border border-gold-500/20 rounded-lg px-3 py-3 md:py-2 text-sm text-white focus:outline-none focus:border-gold-400 shadow-sm transition-all" placeholder="e.g. Multivariable Calculus">
                                 <datalist id="subjectSuggestions">
                                     <option value="Circuit Analysis">
                                     <option value="Multivariable Calculus">
@@ -195,11 +199,11 @@
                                 </datalist>
                             </div>
                             
-                            <button onclick="logSessionManual()" class="w-full bg-sapphire-800 border border-gold-500/30 text-gold-400 py-2 rounded-lg hover:bg-gold-500 hover:text-sapphire-900 transition-colors font-bold text-xs uppercase tracking-widest mb-5">Log Current Time</button>
+                            <button onclick="logSessionManual()" class="w-full bg-sapphire-800 border border-gold-500/30 text-gold-400 py-3 md:py-2 rounded-lg hover:bg-gold-500 hover:text-sapphire-900 transition-colors font-bold text-xs uppercase tracking-widest mb-5 min-h-[44px]">Log Current Time</button>
 
                             <div class="border-t border-gold-500/10 pt-4 flex-grow flex flex-col">
                                 <div class="flex justify-between items-center mb-3">
-                                    <span class="text-xs font-bold text-slate-300">Today's Sessions:</span>
+                                    <span class="text-[11px] md:text-xs font-bold text-slate-300">Today's Sessions:</span>
                                     <span id="totalSessionsCount" class="text-xs font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/20">0</span>
                                 </div>
                                 <ul id="subjectStatsList" class="space-y-2 overflow-y-auto max-h-[120px] pr-1"></ul>
@@ -207,70 +211,72 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col flex-grow slide-in shadow-elegant" style="animation-delay: 0.2s;">
-                        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <div class="glass-card p-5 md:p-8 rounded-3xl flex flex-col flex-grow slide-in shadow-elegant w-full" style="animation-delay: 0.2s;">
+                        <h2 class="text-lg md:text-xl font-bold text-white mb-5 md:mb-6 flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             Sticky Notes
                         </h2>
                         
-                        <div class="bg-sapphire-900/40 border border-gold-500/10 rounded-2xl p-4 mb-6 shadow-inner">
+                        <div class="bg-sapphire-900/40 border border-gold-500/10 rounded-2xl p-4 mb-6 shadow-inner w-full">
                             <input type="hidden" id="editNoteId" value="">
-                            <input type="text" id="noteTitle" placeholder="Note Title" class="w-full bg-transparent border-b border-gold-500/20 text-white font-bold px-2 py-2 focus:outline-none focus:border-gold-400 transition-colors mb-3">
-                            <textarea id="noteBody" placeholder="Take a note..." rows="3" class="w-full bg-sapphire-800/30 border border-transparent rounded-xl px-3 py-2 text-slate-300 text-sm focus:outline-none focus:bg-sapphire-800/80 focus:border-gold-500/30 transition-all resize-none"></textarea>
+                            <input type="text" id="noteTitle" aria-label="Note Title" placeholder="Note Title" class="w-full bg-transparent border-b border-gold-500/20 text-white font-bold px-2 py-2 focus:outline-none focus:border-gold-400 transition-colors mb-3">
+                            <textarea id="noteBody" aria-label="Note Content" placeholder="Take a note..." rows="3" class="w-full bg-sapphire-800/30 border border-transparent rounded-xl px-3 py-3 text-slate-300 text-sm focus:outline-none focus:bg-sapphire-800/80 focus:border-gold-500/30 transition-all resize-none"></textarea>
                             <div class="flex justify-end mt-3">
-                                <button onclick="saveNote()" id="saveNoteBtn" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-4 py-2 rounded-lg font-bold text-xs shadow-gold-glow hover:opacity-90 transition-all active:scale-95 uppercase tracking-widest">Add Note</button>
+                                <button onclick="saveNote()" id="saveNoteBtn" class="w-full sm:w-auto bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-4 py-3 md:py-2 rounded-lg font-bold text-xs shadow-gold-glow hover:opacity-90 transition-all active:scale-95 uppercase tracking-widest min-h-[44px]">Add Note</button>
                             </div>
                         </div>
 
-                        <div id="notesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto max-h-[300px] pr-2">
-                            </div>
+                        <div id="notesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto max-h-[300px] pr-2 w-full"></div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-5 flex flex-col gap-8">
-                    <div class="glass-card p-8 rounded-3xl flex-grow slide-in shadow-elegant" style="animation-delay: 0.3s;">
-                        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                <div class="lg:col-span-5 flex flex-col gap-6 md:gap-8 w-full">
+                    <div class="glass-card p-5 md:p-8 rounded-3xl flex-grow slide-in shadow-elegant w-full" style="animation-delay: 0.3s;">
+                        <h2 class="text-lg md:text-xl font-bold text-white mb-5 md:mb-6 flex items-center gap-3">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                             Action Items
                         </h2>
                         
-                        <div class="mb-6 bg-sapphire-900/50 border border-gold-500/10 p-4 rounded-2xl">
+                        <div class="mb-6 bg-sapphire-900/50 border border-gold-500/10 p-4 rounded-2xl w-full">
                             <div class="flex justify-between text-xs font-semibold mb-2 text-slate-400 uppercase tracking-widest">
                                 <span>Daily Completion</span>
-                                <span id="taskProgressText" class="text-gold-400">0%</span>
+                                <span id="taskProgressText" class="text-gold-400" aria-live="polite">0%</span>
                             </div>
-                            <div class="w-full bg-sapphire-800 rounded-full h-1.5 overflow-hidden">
+                            <div class="w-full bg-sapphire-800 rounded-full h-1.5 overflow-hidden" role="progressbar" aria-label="Task progress">
                                 <div id="taskProgressBar" class="h-full bg-gradient-to-r from-gold-600 to-gold-400 transition-all duration-700 ease-out shadow-gold-glow" style="width: 0%"></div>
                             </div>
                         </div>
 
-                        <div class="flex gap-3 mb-6">
-                            <input type="text" id="taskInput" class="bg-sapphire-900/50 border border-gold-500/20 rounded-xl px-4 py-3 flex-grow text-sm text-white focus:outline-none focus:border-gold-400 focus:bg-sapphire-800/80 transition-all placeholder-slate-500 shadow-sm" placeholder="Add a new task...">
-                            <button onclick="addTask()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-5 py-3 rounded-xl hover:opacity-90 transition-all font-bold shadow-gold-glow active:scale-95">+</button>
+                        <div class="flex flex-col sm:flex-row gap-3 mb-6 w-full">
+                            <input type="text" id="taskInput" aria-label="New Task Input" class="bg-sapphire-900/50 border border-gold-500/20 rounded-xl px-4 py-3 flex-grow text-sm text-white focus:outline-none focus:border-gold-400 focus:bg-sapphire-800/80 transition-all placeholder-slate-500 shadow-sm w-full" placeholder="Add a new task...">
+                            <button onclick="addTask()" aria-label="Add Task" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 px-5 py-3 rounded-xl hover:opacity-90 transition-all font-bold shadow-gold-glow active:scale-95 min-h-[44px] flex items-center justify-center w-full sm:w-auto">
+                                <span class="sm:hidden uppercase tracking-widest text-xs">Add Task</span>
+                                <span class="hidden sm:inline">+</span>
+                            </button>
                         </div>
-                        <ul id="taskList" class="space-y-3 max-h-[350px] overflow-y-auto pr-1"></ul>
+                        <ul id="taskList" class="space-y-3 max-h-[350px] overflow-y-auto pr-1 w-full"></ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="section-academics" class="nav-section hidden opacity-0 translate-y-4">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-                <div class="lg:col-span-8 glass-card p-8 rounded-3xl shadow-elegant">
-                    <div class="flex items-center gap-3 mb-8 border-b border-gold-500/20 pb-4">
-                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                        <h2 class="text-2xl font-bold text-white">Academic Overview</h2>
+        <section id="section-academics" class="nav-section hidden opacity-0 translate-y-4 w-full" aria-label="Academics Section">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 mb-8 w-full">
+                <div class="lg:col-span-8 glass-card p-5 md:p-8 rounded-3xl shadow-elegant w-full">
+                    <div class="flex items-center gap-3 mb-6 md:mb-8 border-b border-gold-500/20 pb-4">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <h2 class="text-xl md:text-2xl font-bold text-white">Academic Overview</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-sapphire-900/40 rounded-2xl p-6 border border-gold-500/10">
-                            <h3 class="text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div class="bg-sapphire-900/40 rounded-2xl p-5 md:p-6 border border-gold-500/10">
+                            <h3 class="text-[11px] md:text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-gold-500"></span> Today's Schedule
                             </h3>
                             <ul id="timetableList" class="space-y-3"></ul>
                         </div>
-                        <div class="bg-sapphire-900/40 rounded-2xl p-6 border border-gold-500/10">
-                            <h3 class="text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        <div class="bg-sapphire-900/40 rounded-2xl p-5 md:p-6 border border-gold-500/10">
+                            <h3 class="text-[11px] md:text-sm font-bold text-slate-300 tracking-wider uppercase mb-5 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                                 Attendance Telemetry
                             </h3>
                             <ul id="attendanceList" class="space-y-5"></ul>
@@ -278,104 +284,106 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-4 flex flex-col gap-8">
-                    <div class="glass-card p-6 rounded-3xl flex flex-col shadow-elegant">
-                        <h3 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <div class="lg:col-span-4 flex flex-col gap-6 md:gap-8 w-full">
+                    <div class="glass-card p-5 md:p-6 rounded-3xl flex flex-col shadow-elegant w-full">
+                        <h3 class="text-base md:text-lg font-bold text-white mb-4 md:mb-5 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             Exam Registration
                         </h3>
-                        <div class="flex flex-col gap-3 mb-4">
-                            <input type="text" id="examTitle" class="bg-sapphire-900/50 border border-gold-500/20 text-white rounded-xl px-4 py-2.5 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm" placeholder="Subject / Exam Name">
-                            <input type="datetime-local" id="examDate" class="bg-sapphire-900/50 border border-gold-500/20 text-slate-300 rounded-xl px-4 py-2.5 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm">
-                            <button onclick="bookExam()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 hover:opacity-90 px-4 py-2.5 rounded-xl transition-all font-bold text-sm active:scale-95 shadow-gold-glow mt-1">Book Slot</button>
+                        <div class="flex flex-col gap-3 mb-4 w-full">
+                            <input type="text" id="examTitle" aria-label="Subject or Exam Name" class="bg-sapphire-900/50 border border-gold-500/20 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm min-h-[44px] w-full" placeholder="Subject / Exam Name">
+                            <input type="datetime-local" id="examDate" aria-label="Exam Date and Time" class="bg-sapphire-900/50 border border-gold-500/20 text-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:border-gold-400 focus:bg-sapphire-800 text-sm shadow-sm min-h-[44px] w-full">
+                            <button onclick="bookExam()" class="bg-gradient-to-r from-gold-400 to-gold-600 text-sapphire-900 hover:opacity-90 px-4 py-3 rounded-xl transition-all font-bold text-sm active:scale-95 shadow-gold-glow mt-1 min-h-[44px] w-full">Book Slot</button>
                         </div>
-                        <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[160px] pr-1"></ul>
+                        <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[160px] pr-1 w-full"></ul>
                     </div>
 
-                    <div class="glass-card p-6 rounded-3xl shadow-elegant">
-                        <h2 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div class="glass-card p-5 md:p-6 rounded-3xl shadow-elegant w-full">
+                        <h2 class="text-base md:text-lg font-bold text-white mb-4 md:mb-5 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Upcoming Deadlines
                         </h2>
-                        <div class="bg-sapphire-900/40 border border-gold-500/10 rounded-2xl p-4 mb-4">
-                            <div class="flex flex-col gap-3">
-                                <input type="text" id="courseInput" class="bg-sapphire-800/50 border border-gold-500/20 text-white text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-400 placeholder-slate-400 shadow-sm" placeholder="Course & Title">
-                                <div class="flex gap-2 items-center">
-                                    <input type="date" id="dateInput" class="w-full bg-sapphire-800/50 border border-gold-500/20 text-slate-300 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-gold-400 shadow-sm">
-                                    <button onclick="addAssignment()" class="bg-gold-500 text-sapphire-900 hover:bg-gold-400 px-5 py-2.5 rounded-xl transition-all text-sm font-bold active:scale-95 shadow-sm">Add</button>
+                        <div class="bg-sapphire-900/40 border border-gold-500/10 rounded-2xl p-4 mb-4 w-full">
+                            <div class="flex flex-col gap-3 w-full">
+                                <input type="text" id="courseInput" aria-label="Course and Title" class="w-full bg-sapphire-800/50 border border-gold-500/20 text-white text-sm rounded-xl px-3 py-3 focus:outline-none focus:border-gold-400 placeholder-slate-400 shadow-sm min-h-[44px]" placeholder="Course & Title">
+                                <div class="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center w-full">
+                                    <input type="date" id="dateInput" aria-label="Assignment Due Date" class="w-full bg-sapphire-800/50 border border-gold-500/20 text-slate-300 text-sm rounded-xl px-3 py-3 focus:outline-none focus:border-gold-400 shadow-sm min-h-[44px]">
+                                    <button onclick="addAssignment()" class="w-full sm:w-auto bg-gold-500 text-sapphire-900 hover:bg-gold-400 px-5 py-3 rounded-xl transition-all text-sm font-bold active:scale-95 shadow-sm min-h-[44px]">Add</button>
                                 </div>
                             </div>
                         </div>
-                        <ul id="assignmentList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2"></ul>
+                        <ul id="assignmentList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2 w-full"></ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="section-events" class="nav-section hidden opacity-0 translate-y-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="glass-card p-8 rounded-3xl shadow-elegant">
-                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
-                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+        <section id="section-events" class="nav-section hidden opacity-0 translate-y-4 w-full" aria-label="Events Section">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 w-full">
+                <div class="glass-card p-5 md:p-8 rounded-3xl shadow-elegant w-full">
+                    <h2 class="text-xl md:text-2xl font-bold text-white mb-5 md:mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                         Active Portfolios
                     </h2>
                     <div class="space-y-6">
-                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-5 md:p-6 elegant-hover cursor-default">
                             <div class="flex justify-between items-start mb-4">
-                                <span class="bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Video Production</span>
-                                <span class="text-xs font-mono text-emerald-400 bg-emerald-900/30 px-2 py-1 rounded border border-emerald-500/30">IN PROGRESS</span>
+                                <span class="bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[9px] md:text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Video Production</span>
+                                <span class="text-[10px] md:text-xs font-mono text-emerald-400 bg-emerald-900/30 px-2 py-1 rounded border border-emerald-500/30">IN PROGRESS</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2">AI Video Automation Script</h3>
-                            <p class="text-sm text-slate-400 mb-5 leading-relaxed">30-second AI-generated promotional video sequence utilizing Descript text-to-video tools.</p>
+                            <h3 class="text-base md:text-lg font-bold text-white mb-2">AI Video Automation Script</h3>
+                            <p class="text-xs md:text-sm text-slate-400 mb-2 leading-relaxed">30-second AI-generated promotional video sequence utilizing Descript text-to-video tools.</p>
                         </div>
-                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-6 elegant-hover cursor-default">
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-5 md:p-6 elegant-hover cursor-default">
                             <div class="flex justify-between items-start mb-4">
-                                <span class="bg-slate-800 text-slate-300 border border-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Web Dev</span>
-                                <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-600">PLANNING</span>
+                                <span class="bg-slate-800 text-slate-300 border border-slate-600 text-[9px] md:text-[10px] font-bold px-2.5 py-1 rounded-md tracking-widest uppercase">Web Dev</span>
+                                <span class="text-[10px] md:text-xs font-mono text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-600">PLANNING</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2">Carbon Footprint Platform</h3>
-                            <p class="text-sm text-slate-400 leading-relaxed">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
+                            <h3 class="text-base md:text-lg font-bold text-white mb-2">Carbon Footprint Platform</h3>
+                            <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Full-stack web application designed for the PromptWars virtual technical challenge.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl shadow-elegant">
-                    <h2 class="text-2xl font-bold text-white mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
-                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <div class="glass-card p-5 md:p-8 rounded-3xl shadow-elegant w-full">
+                    <h2 class="text-xl md:text-2xl font-bold text-white mb-5 md:mb-6 border-b border-gold-500/20 pb-4 flex items-center gap-3">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         University Events
                     </h2>
                     <div class="space-y-4">
-                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
-                            <div class="w-14 h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex flex-col items-center justify-center flex-shrink-0 text-gold-400">
-                                <span class="text-[9px] font-bold uppercase tracking-widest">Early</span>
-                                <span class="text-lg font-bold leading-none">'26</span>
+                        <div class="bg-sapphire-900/40 border border-gold-500/20 rounded-2xl p-4 md:p-5 flex items-center gap-4 md:gap-5 elegant-hover cursor-pointer transition-all">
+                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gold-500/10 border border-gold-500/30 flex flex-col items-center justify-center flex-shrink-0 text-gold-400">
+                                <span class="text-[8px] md:text-[9px] font-bold uppercase tracking-widest">Early</span>
+                                <span class="text-base md:text-lg font-bold leading-none">'26</span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-base">FrostHack 2026</h3>
-                                <p class="text-xs text-slate-400 mt-1">Hackathon - Registration confirmed.</p>
+                                <h3 class="font-bold text-white text-sm md:text-base">FrostHack 2026</h3>
+                                <p class="text-[11px] md:text-xs text-slate-400 mt-1">Hackathon - Registration confirmed.</p>
                             </div>
                         </div>
-                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-5 elegant-hover cursor-pointer transition-all">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
-                                <span class="text-[9px] font-bold uppercase tracking-widest">Feb</span>
-                                <span class="text-lg font-bold leading-none">20</span>
+                        <div class="bg-sapphire-900/40 border border-slate-700/50 rounded-2xl p-4 md:p-5 flex items-center gap-4 md:gap-5 elegant-hover cursor-pointer transition-all">
+                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-slate-800 border border-slate-600 flex flex-col items-center justify-center flex-shrink-0 text-slate-300">
+                                <span class="text-[8px] md:text-[9px] font-bold uppercase tracking-widest">Feb</span>
+                                <span class="text-base md:text-lg font-bold leading-none">20</span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-base">Revels 2026</h3>
-                                <p class="text-xs text-slate-400 mt-1">Multi-day university community festival.</p>
+                                <h3 class="font-bold text-white text-sm md:text-base">Revels 2026</h3>
+                                <p class="text-[11px] md:text-xs text-slate-400 mt-1">Multi-day university community festival.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-    </div>
+    </main>
 
     <script>
         // ==========================================
-        // 1. NAVIGATION LOGIC
+        // 1. NAVIGATION LOGIC (Mobile Adjusted)
         // ==========================================
+        let currentActiveNavElement = null;
+
         window.addEventListener('load', () => {
             const activeBtn = document.querySelector('.active-nav');
             if (activeBtn) moveNav(activeBtn, 'dashboard', true);
@@ -384,15 +392,22 @@
             renderNotes();
         });
 
+        // Recalculate slider position if device is rotated or resized
+        window.addEventListener('resize', () => {
+            if (currentActiveNavElement) moveNav(currentActiveNavElement, null, true);
+        });
+
         function moveNav(element, sectionId, isInitial = false) {
+            currentActiveNavElement = element;
             const highlight = document.getElementById('nav-highlight');
             const navContainer = element.parentElement;
             
+            // Adjust calculation based on scroll position for mobile overflow nav
             const containerRect = navContainer.getBoundingClientRect();
             const elementRect = element.getBoundingClientRect();
             
             highlight.style.width = `${elementRect.width}px`;
-            highlight.style.left = `${elementRect.left - containerRect.left}px`;
+            highlight.style.left = `${elementRect.left - containerRect.left + navContainer.scrollLeft}px`;
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('text-sapphire-900', 'active-nav');
@@ -401,7 +416,7 @@
             element.classList.remove('text-slate-400');
             element.classList.add('text-sapphire-900', 'active-nav');
 
-            if (!isInitial) {
+            if (!isInitial && sectionId) {
                 document.querySelectorAll('.nav-section').forEach(sec => {
                     sec.classList.remove('opacity-100', 'translate-y-0');
                     sec.classList.add('opacity-0', 'translate-y-4');
@@ -601,7 +616,7 @@
                     <div class="bg-sapphire-900/50 border border-gold-500/20 rounded-2xl p-4 flex flex-col elegant-hover cursor-pointer relative group transition-all h-32" onclick="editNote(${index})">
                         <h3 class="text-sm font-bold text-white mb-2 truncate pr-6">${note.title}</h3>
                         <p class="text-xs text-slate-400 overflow-hidden line-clamp-3 leading-relaxed">${note.body}</p>
-                        <button onclick="deleteNote(event, ${index})" class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-400 bg-sapphire-800/80 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs transition-all">✕</button>
+                        <button onclick="deleteNote(event, ${index})" aria-label="Delete note" class="absolute top-3 right-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 text-slate-500 hover:text-rose-400 bg-sapphire-800/80 hover:bg-rose-500/10 p-2 md:p-1.5 rounded-lg text-xs transition-all flex items-center justify-center min-w-[32px] min-h-[32px]">✕</button>
                     </div>
                 `;
             });
@@ -675,13 +690,13 @@
                 if (t.completed) completedCount++;
                 list.innerHTML += `
                     <li class="group flex items-center justify-between p-3.5 bg-sapphire-900/40 border border-gold-500/10 rounded-xl elegant-hover cursor-pointer mb-2.5" onclick="toggleTask(${i})">
-                        <div class="flex items-center gap-3.5 overflow-hidden">
-                            <div class="w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors ${t.completed ? 'bg-gold-500 border-gold-500' : 'border-slate-500'}">
-                                ${t.completed ? '<svg class="w-2.5 h-2.5 text-sapphire-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
+                        <div class="flex items-center gap-3.5 overflow-hidden w-full">
+                            <div class="w-5 h-5 md:w-4 md:h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors ${t.completed ? 'bg-gold-500 border-gold-500' : 'border-slate-500'}">
+                                ${t.completed ? '<svg class="w-3 h-3 md:w-2.5 md:h-2.5 text-sapphire-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
                             </div>
-                            <span class="text-sm truncate transition-colors font-medium ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span>
+                            <span class="text-sm truncate transition-colors font-medium ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'} flex-grow">${t.text}</span>
                         </div>
-                        <button onclick="deleteTask(event, ${i})" class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs ml-2 transition-all">✕</button>
+                        <button onclick="deleteTask(event, ${i})" aria-label="Delete Task" class="opacity-100 md:opacity-0 md:group-hover:opacity-100 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 p-2 md:p-1.5 rounded-lg text-xs ml-2 transition-all flex items-center justify-center flex-shrink-0 min-w-[32px] min-h-[32px]">✕</button>
                     </li>`;
             });
 
@@ -716,7 +731,7 @@
             ttList.innerHTML += `
                 <li class="flex items-center justify-between p-3 bg-sapphire-800/40 border border-gold-500/10 rounded-xl mb-2.5 shadow-sm">
                     <div class="flex flex-col"><span class="font-bold text-slate-200 text-xs">${slot.course}</span><span class="text-[10px] text-slate-400 mt-0.5">${slot.room}</span></div>
-                    <span class="text-[10px] font-bold text-gold-400 bg-gold-500/10 border border-gold-500/20 px-2.5 py-1 rounded-md tracking-wide">${slot.time}</span>
+                    <span class="text-[10px] font-bold text-gold-400 bg-gold-500/10 border border-gold-500/20 px-2.5 py-1 rounded-md tracking-wide whitespace-nowrap ml-2">${slot.time}</span>
                 </li>`;
         });
 
@@ -734,15 +749,15 @@
                 const colorClass = pct >= 75 ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-rose-500 shadow-[0_0_8px_#f43f5e]';
                 const textClass = pct >= 75 ? 'text-emerald-400' : 'text-rose-400';
                 list.innerHTML += `
-                    <li class="cursor-pointer group bg-sapphire-800/40 p-4 rounded-xl border border-gold-500/10 shadow-sm elegant-hover" onclick="logAttendance(${i})">
+                    <li class="cursor-pointer group bg-sapphire-800/40 p-4 rounded-xl border border-gold-500/10 shadow-sm elegant-hover w-full" onclick="logAttendance(${i})">
                         <div class="flex justify-between items-end mb-2.5">
-                            <span class="text-xs font-bold text-slate-200">${item.course}</span>
+                            <span class="text-xs font-bold text-slate-200 truncate pr-2">${item.course}</span>
                             <span class="text-xs font-bold ${textClass}">${pct}%</span>
                         </div>
-                        <div class="w-full bg-sapphire-900 rounded-full h-1.5 overflow-hidden">
+                        <div class="w-full bg-sapphire-900 rounded-full h-1.5 overflow-hidden" role="progressbar" aria-label="Attendance for ${item.course}">
                             <div class="h-full transition-all duration-500 ${colorClass}" style="width: ${pct}%"></div>
                         </div>
-                        <div class="text-[10px] text-slate-500 font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Click to log class (${item.att}/${item.tot})</div>
+                        <div class="text-[10px] text-slate-500 font-medium mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">Click to log class (${item.att}/${item.tot})</div>
                     </li>`;
             });
         }
@@ -755,11 +770,11 @@
             exams.forEach((exam, i) => {
                 list.innerHTML += `
                     <li class="flex items-center justify-between p-3 bg-sapphire-900/40 border border-gold-500/10 rounded-xl mb-2 shadow-sm elegant-hover">
-                        <div class="flex flex-col overflow-hidden">
+                        <div class="flex flex-col overflow-hidden mr-2">
                             <span class="font-bold text-slate-200 text-xs truncate">${exam.title}</span>
-                            <span class="text-[10px] font-medium text-gold-400 mt-0.5">${new Date(exam.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</span>
+                            <span class="text-[10px] font-medium text-gold-400 mt-0.5 truncate">${new Date(exam.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</span>
                         </div>
-                        <button onclick="delExam(${i})" class="text-slate-500 hover:text-rose-400 bg-sapphire-800/50 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs transition-colors">✕</button>
+                        <button onclick="delExam(${i})" aria-label="Delete Exam Booking" class="text-slate-500 hover:text-rose-400 bg-sapphire-800/50 hover:bg-rose-500/10 p-2 md:p-1.5 rounded-lg text-xs transition-colors flex items-center justify-center flex-shrink-0 min-w-[32px] min-h-[32px]">✕</button>
                     </li>`;
             });
         }
@@ -779,11 +794,11 @@
             list.innerHTML = assigns.length ? '' : `<div class="text-slate-500 text-xs py-4 text-center border border-dashed border-gold-500/20 rounded-xl">No pending deadlines.</div>`;
             assigns.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach((a, i) => {
                 list.innerHTML += `
-                    <li class="flex items-center justify-between p-3.5 bg-sapphire-900/40 border border-gold-500/10 rounded-xl mb-2.5 shadow-sm elegant-hover">
-                        <span class="text-sm font-semibold text-slate-200 truncate w-[55%]">${a.course}</span>
-                        <div class="flex items-center gap-3">
-                            <span class="text-[10px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2.5 py-1 rounded-md shadow-[0_0_8px_rgba(244,63,94,0.3)]">${new Date(a.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>
-                            <button onclick="delAssign(${i})" class="text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 p-1.5 rounded-lg text-xs transition-colors">✕</button>
+                    <li class="flex items-center justify-between p-3.5 bg-sapphire-900/40 border border-gold-500/10 rounded-xl mb-2.5 shadow-sm elegant-hover w-full">
+                        <span class="text-sm font-semibold text-slate-200 truncate pr-2 flex-grow">${a.course}</span>
+                        <div class="flex items-center gap-2 md:gap-3 flex-shrink-0">
+                            <span class="text-[9px] md:text-[10px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2 md:px-2.5 py-1 rounded-md shadow-[0_0_8px_rgba(244,63,94,0.3)] whitespace-nowrap">${new Date(a.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>
+                            <button onclick="delAssign(${i})" aria-label="Delete Assignment" class="text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 p-2 md:p-1.5 rounded-lg text-xs transition-colors flex items-center justify-center min-w-[32px] min-h-[32px]">✕</button>
                         </div>
                     </li>`;
             });
