@@ -1,11 +1,28 @@
-/* Core Layout Resets for Background */
+/* Core Layout & Font Resets */
 body {
     margin: 0;
-    background-color: #050505; /* Deep fallback base */
+    /* The crazy aura base gradient */
+    background: linear-gradient(
+        -45deg, 
+        #090514, /* Deep Midnight */
+        #1b0033, /* Dark Purple */
+        #3a005c, /* Neon Violet */
+        #001a33  /* Deep Cyan Base */
+    );
+    background-size: 400% 400%;
+    animation: auraFlow 15s ease infinite;
     overflow-x: hidden;
+    color: #e2e8f0;
 }
 
-/* Fix the canvas perfectly to the background */
+/* Fluid Animation for the Background */
+@keyframes auraFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Canvas locked behind everything */
 #bg-canvas {
     position: fixed;
     top: 0;
@@ -13,36 +30,43 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    pointer-events: none; /* Allows clicking through the canvas to your UI */
+    pointer-events: none;
+    mix-blend-mode: screen; /* Makes the canvas glow blend perfectly with the CSS gradient */
 }
 
-/* Staggered slide-in animation for UI cards */
+/* Card Styling: Glassmorphism effect to let the aura shine through */
+.glass-card {
+    background: rgba(15, 10, 25, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
 .slide-in {
-    animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
     transform: translateY(20px);
 }
 
 @keyframes slideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Interactive Hover States */
 .glow-hover {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glow-hover:hover {
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
-    background-color: rgba(24, 24, 27, 0.95);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+    border-color: rgba(0, 240, 255, 0.6);
+    background-color: rgba(30, 20, 50, 0.8);
+    transform: translateY(-2px);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #09090b; }
-::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+/* Custom Cyber Scrollbars */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #ff007f; }

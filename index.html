@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentHub Dashboard</title>
+    <title>StudentHub | Ultimate Workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -14,77 +15,474 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        accent: { 400: '#f87171', 500: '#ef4444', 600: '#dc2626', 900: '#7f1d1d' },
-                        dark: { bg: '#09090b', card: '#18181b', border: '#27272a' }
+                        neon: {
+                            pink: '#ff007f',
+                            cyan: '#00f0ff',
+                            purple: '#b026ff'
+                        }
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(-45deg, #090514, #1b0033, #3a005c, #001a33);
+            background-size: 400% 400%;
+            animation: auraFlow 15s ease infinite;
+            overflow-x: hidden;
+            color: #e2e8f0;
+        }
+
+        @keyframes auraFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-in {
+            animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Interactive Hover States */
+        .glow-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+            border-color: rgba(0, 240, 255, 0.6);
+            background-color: rgba(30, 20, 50, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Cyber Scrollbars */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff007f; }
+        
+        /* Input Overrides */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) hue-rotate(180deg);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="text-zinc-300 font-sans min-h-screen selection:bg-accent-500 selection:text-white">
+<body class="font-sans min-h-screen pb-12 selection:bg-neon-pink selection:text-white">
 
     <canvas id="bg-canvas"></canvas>
 
-    <div class="max-w-6xl mx-auto relative z-10 p-4 md:p-12">
+    <div class="max-w-[1400px] mx-auto relative z-10 p-4 md:p-8 lg:p-12">
         
-        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-dark-border pb-6 slide-in" style="animation-delay: 0.1s;">
-            <div>
-                <div class="flex items-center gap-3 mb-2 text-accent-500">
-                    <svg class="w-10 h-10 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
-                    <h1 class="text-4xl font-bold tracking-tight text-white">StudentHub</h1>
+        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-neon-cyan/20 pb-6 slide-in" style="animation-delay: 0.1s;">
+            <div class="flex items-center gap-6">
+                <div class="w-20 h-20 rounded-2xl bg-black/50 border-2 border-neon-cyan flex items-center justify-center shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                    <span class="text-3xl">👨‍💻</span>
                 </div>
-                <p class="text-zinc-500 font-medium">Week 2 Dashboard — Interactive Workspace</p>
+                <div>
+                    <h1 class="text-4xl font-bold tracking-tight text-white mb-1">StudentHub</h1>
+                    <p class="text-neon-pink font-medium tracking-wide text-sm uppercase">Computer Science • Manipal Institute of Technology</p>
+                </div>
             </div>
-            <div class="mt-4 md:mt-0 text-sm font-semibold text-accent-400 bg-accent-900/30 px-4 py-2 rounded-full border border-accent-900 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-                System: Online
+            <div class="mt-6 md:mt-0 flex gap-3">
+                <div class="text-sm font-semibold text-slate-300 bg-black/40 px-4 py-2 rounded-lg border border-neon-cyan/30">
+                    <span id="clockDisplay">00:00:00</span>
+                </div>
+                <div class="text-sm font-semibold text-neon-cyan bg-neon-cyan/10 px-4 py-2 rounded-lg border border-neon-cyan/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                    Status: Online
+                </div>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-dark-card/70 backdrop-blur-md p-8 rounded-2xl border border-dark-border shadow-2xl slide-in" style="animation-delay: 0.2s;">
-                <div class="flex items-center gap-3 mb-6 border-b border-dark-border pb-4">
-                    <div class="bg-accent-900/40 p-2 rounded-lg text-accent-500 border border-accent-900/50">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Action Items</h2>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            
+            <div class="lg:col-span-8 flex flex-col gap-8">
                 
-                <div class="flex gap-2 mb-6 group">
-                    <input type="text" id="taskInput" class="bg-dark-bg/80 border border-dark-border rounded-xl px-4 py-3 flex-grow text-white focus:outline-none focus:border-accent-500 transition-all placeholder-zinc-600 shadow-inner" placeholder="Initialize new task...">
-                    <button onclick="addTask()" class="bg-accent-600 text-white px-6 py-3 rounded-xl hover:bg-accent-500 transition-all font-semibold shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] active:scale-95">Add</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 slide-in" style="animation-delay: 0.2s;">
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-black/50">
+                            <div id="pomodoroProgress" class="h-full bg-gradient-to-r from-neon-cyan to-neon-pink w-0 transition-all duration-1000 shadow-[0_0_10px_#ff007f]"></div>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-neon-cyan">⏱️</span> Focus Session
+                        </h2>
+                        <div class="flex gap-2 mb-4">
+                            <input type="number" id="durationInput" value="25" min="1" max="120" class="w-full bg-black/40 border border-neon-cyan/30 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-neon-pink transition-colors" placeholder="Minutes">
+                        </div>
+                        <div class="flex flex-col items-center py-2">
+                            <div class="text-6xl font-bold text-white tracking-widest mb-6 font-mono drop-shadow-[0_0_15px_rgba(0,240,255,0.4)]" id="timerDisplay">25:00</div>
+                            <div class="flex gap-3 w-full">
+                                <button onclick="toggleTimer()" id="timerBtn" class="flex-grow bg-neon-cyan text-black py-3 rounded-xl hover:bg-white transition-all font-bold active:scale-95 shadow-[0_0_15px_rgba(0,240,255,0.4)]">Start</button>
+                                <button onclick="resetTimer()" class="bg-black/50 border border-neon-pink/50 text-neon-pink hover:bg-neon-pink hover:text-white px-4 py-3 rounded-xl transition-all active:scale-95">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl flex flex-col">
+                        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-neon-pink">📝</span> Scratchpad
+                        </h2>
+                        <textarea id="quickNotes" oninput="saveNotes()" class="w-full flex-grow bg-black/40 border border-neon-cyan/30 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-neon-pink transition-colors resize-none" placeholder="Draft ideas, paste links, or outline scripts here..."></textarea>
+                    </div>
                 </div>
-                <ul id="taskList" class="space-y-3"></ul>
+
+                <div class="glass-card p-8 rounded-2xl slide-in" style="animation-delay: 0.3s;">
+                    <div class="flex items-center gap-3 mb-6 border-b border-neon-cyan/20 pb-4">
+                        <span class="text-2xl">🎓</span>
+                        <h2 class="text-2xl font-bold text-white">Academic Tracking</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
+                            <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_8px_#00f0ff]"></span> Schedule
+                            </h3>
+                            <ul id="timetableList" class="space-y-3"></ul>
+                        </div>
+
+                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20">
+                            <h3 class="text-lg font-semibold text-white mb-4">Live Attendance</h3>
+                            <ul id="attendanceList" class="space-y-4"></ul>
+                        </div>
+
+                        <div class="bg-black/30 rounded-xl p-5 border border-neon-cyan/20 flex flex-col">
+                            <h3 class="text-lg font-semibold text-white mb-4">Booking Interface</h3>
+                            <div class="flex flex-col gap-3 mb-4">
+                                <input type="text" id="examTitle" class="bg-black/50 border border-neon-cyan/30 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink" placeholder="Exam Name (e.g. MTH201)">
+                                <input type="datetime-local" id="examDate" class="bg-black/50 border border-neon-cyan/30 text-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink">
+                                <button onclick="bookExam()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all font-semibold active:scale-95">Lock Slot</button>
+                            </div>
+                            <ul id="bookedExamsList" class="space-y-2 overflow-y-auto max-h-[150px] pr-1"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-dark-card/70 backdrop-blur-md p-8 rounded-2xl border border-dark-border shadow-2xl slide-in" style="animation-delay: 0.3s;">
-                <div class="flex items-center gap-3 mb-6 border-b border-dark-border pb-4">
-                    <div class="bg-accent-900/40 p-2 rounded-lg text-accent-500 border border-accent-900/50">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Deadlines</h2>
-                </div>
+            <div class="lg:col-span-4 flex flex-col gap-8">
                 
-                <div class="bg-dark-bg/80 rounded-xl p-5 border border-dark-border mb-6 focus-within:border-accent-500 focus-within:shadow-[0_0_15px_rgba(239,68,68,0.1)] transition-all">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex gap-3">
-                            <input type="text" id="courseInput" class="bg-dark-card border border-dark-border text-white rounded-lg px-3 py-2 w-1/3 focus:outline-none focus:border-accent-500 transition-colors placeholder-zinc-600 font-medium" placeholder="Course ID">
-                            <input type="text" id="assignmentInput" class="bg-dark-card border border-dark-border text-white rounded-lg px-3 py-2 w-2/3 focus:outline-none focus:border-accent-500 transition-colors placeholder-zinc-600 font-medium" placeholder="Assignment Title">
-                        </div>
-                        <div class="flex gap-3 items-center">
-                            <div class="relative flex-grow">
-                                <input type="date" id="dateInput" class="w-full bg-dark-card border border-dark-border text-zinc-300 rounded-lg px-3 py-2 focus:outline-none focus:border-accent-500 cursor-pointer [color-scheme:dark]">
+                <div class="glass-card p-6 rounded-2xl flex-grow slide-in" style="animation-delay: 0.4s;">
+                    <div class="flex items-center justify-between mb-6 border-b border-neon-cyan/20 pb-4">
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                            <span class="text-neon-cyan">✅</span> Action Items
+                        </h2>
+                    </div>
+                    
+                    <div class="flex gap-2 mb-6 group">
+                        <input type="text" id="taskInput" class="bg-black/40 border border-neon-cyan/30 rounded-xl px-4 py-2 flex-grow text-sm text-white focus:outline-none focus:border-neon-pink transition-all placeholder-slate-400" placeholder="Initialize task...">
+                        <button onclick="addTask()" class="bg-neon-cyan text-black px-4 py-2 rounded-xl hover:bg-white hover:shadow-[0_0_15px_#00f0ff] transition-all font-bold active:scale-95">+</button>
+                    </div>
+                    
+                    <ul id="taskList" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></ul>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl slide-in" style="animation-delay: 0.5s;">
+                    <h2 class="text-xl font-bold text-white mb-4 border-b border-neon-cyan/20 pb-4 flex items-center gap-2">
+                        <span class="text-neon-pink">🔥</span> Deadlines
+                    </h2>
+                    
+                    <div class="bg-black/30 rounded-xl p-4 border border-neon-cyan/20 mb-4">
+                        <div class="flex flex-col gap-3">
+                            <input type="text" id="courseInput" class="bg-black/50 border border-neon-cyan/30 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-neon-pink placeholder-slate-400" placeholder="Course & Title">
+                            <div class="flex gap-2 items-center">
+                                <input type="date" id="dateInput" class="w-full bg-black/50 border border-neon-cyan/30 text-slate-300 text-sm rounded-lg px-2 py-2 focus:outline-none focus:border-neon-pink">
+                                <button onclick="addAssignment()" class="bg-neon-pink text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_#ff007f] px-4 py-2 rounded-lg transition-all text-sm font-bold active:scale-95">Add</button>
                             </div>
-                            <button onclick="addAssignment()" class="bg-zinc-800 text-white border border-zinc-700 hover:border-accent-500 hover:text-accent-400 px-6 py-2 rounded-lg transition-all font-semibold active:scale-95">Save</button>
                         </div>
                     </div>
+                    
+                    <ul id="assignmentList" class="space-y-2 max-h-[200px] overflow-y-auto pr-2"></ul>
                 </div>
-                <ul id="assignmentList" class="space-y-3"></ul>
+
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // ==========================================
+        // 1. CRAZY AURA ANIMATION (Floating Glow)
+        // ==========================================
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let width, height;
+        const colors = ['#00f0ff', '#ff007f', '#b026ff'];
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth; 
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            const particleCount = Math.floor((width * height) / 10000);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width, 
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.3, 
+                    vy: (Math.random() * -0.5) - 0.2,
+                    radius: Math.random() * 2.5 + 1,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: Math.random() * 0.5 + 0.3
+                });
+            }
+        }
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.fill();
+                
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1.0;
+            });
+            requestAnimationFrame(drawCanvas);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas(); drawCanvas();
+
+        // Live Header Clock
+        setInterval(() => {
+            document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+        }, 1000);
+
+        // ==========================================
+        // 2. POMODORO TIMER LOGIC
+        // ==========================================
+        let timerInterval;
+        let totalTime = 1500;
+        let timeLeft = 1500;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const s = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+            const progress = ((totalTime - timeLeft) / totalTime) * 100;
+            document.getElementById('pomodoroProgress').style.width = `${progress}%`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerBtn');
+            const input = document.getElementById('durationInput');
+
+            if (isRunning) {
+                clearInterval(timerInterval);
+                btn.textContent = 'Start';
+                btn.classList.replace('bg-white', 'bg-neon-cyan');
+                btn.classList.replace('text-black', 'text-black');
+                input.disabled = false;
+            } else {
+                if (timeLeft === totalTime) {
+                    const minutes = parseInt(input.value) || 25;
+                    totalTime = minutes * 60;
+                    timeLeft = totalTime;
+                }
+                input.disabled = true;
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); } 
+                    else { resetTimer(); alert("Focus session complete! Take a break."); }
+                }, 1000);
+                btn.textContent = 'Pause';
+                btn.classList.replace('bg-neon-cyan', 'bg-white');
+            }
+            isRunning = !isRunning;
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            const input = document.getElementById('durationInput');
+            totalTime = (parseInt(input.value) || 25) * 60;
+            timeLeft = totalTime;
+            input.disabled = false;
+            updateTimerDisplay();
+            const btn = document.getElementById('timerBtn');
+            btn.textContent = 'Start';
+            btn.classList.replace('bg-white', 'bg-neon-cyan');
+        }
+
+        document.getElementById('durationInput').addEventListener('input', (e) => {
+            if (!isRunning) { timeLeft = parseInt(e.target.value) * 60 || 0; updateTimerDisplay(); }
+        });
+
+        // ==========================================
+        // 3. SCRATCHPAD (NOTES)
+        // ==========================================
+        const notesArea = document.getElementById('quickNotes');
+        notesArea.value = localStorage.getItem('aura_notes') || '';
+        function saveNotes() { localStorage.setItem('aura_notes', notesArea.value); }
+
+        // ==========================================
+        // 4. TASK MANAGER
+        // ==========================================
+        let tasks = JSON.parse(localStorage.getItem('aura_tasks')) || [
+            { text: "Finish GTA VI promo script", completed: false },
+            { text: "Log Strava workout", completed: true }
+        ];
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = tasks.length ? '' : `<div class="text-slate-400 text-xs text-center py-4">All clear!</div>`;
+            tasks.forEach((t, i) => {
+                list.innerHTML += `
+                    <li class="group flex items-center justify-between p-3 bg-black/40 rounded-lg glow-hover cursor-pointer mb-2 border border-transparent" onclick="toggleTask(${i})">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <div class="w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors ${t.completed ? 'bg-neon-cyan border-neon-cyan' : 'border-slate-500'}">
+                                ${t.completed ? '<span class="text-black text-[10px] font-bold">✓</span>' : ''}
+                            </div>
+                            <span class="text-sm truncate transition-colors ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span>
+                        </div>
+                        <button onclick="deleteTask(event, ${i})" class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-neon-pink text-xs ml-2 transition-all">✕</button>
+                    </li>`;
+            });
+        }
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            if (input.value.trim()) {
+                tasks.push({ text: input.value.trim(), completed: false });
+                localStorage.setItem('aura_tasks', JSON.stringify(tasks));
+                input.value = ''; renderTasks();
+            }
+        }
+        function toggleTask(i) { tasks[i].completed = !tasks[i].completed; localStorage.setItem('aura_tasks', JSON.stringify(tasks)); renderTasks(); }
+        function deleteTask(e, i) { e.stopPropagation(); tasks.splice(i, 1); localStorage.setItem('aura_tasks', JSON.stringify(tasks)); renderTasks(); }
+        document.getElementById('taskInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
+
+        // ==========================================
+        // 5. ACADEMIC HUB (Timetable, Attendance, Exams)
+        // ==========================================
+        const schedule = [
+            { time: "09:00 AM", course: "Adv. Eng. Mathematics", room: "NLH 201" },
+            { time: "11:30 AM", course: "Electrical Eng. Lab", room: "Lab Block 4" },
+            { time: "02:00 PM", course: "CS Theory", room: "AB 104" }
+        ];
+        
+        const ttList = document.getElementById('timetableList');
+        schedule.forEach(slot => {
+            ttList.innerHTML += `
+                <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20">
+                    <div class="flex flex-col"><span class="font-semibold text-slate-200 text-xs">${slot.course}</span><span class="text-[10px] text-slate-400">${slot.room}</span></div>
+                    <span class="text-[10px] font-bold text-neon-cyan bg-neon-cyan/10 px-2 py-1 rounded">${slot.time}</span>
+                </li>`;
+        });
+
+        let attendance = JSON.parse(localStorage.getItem('aura_attendance')) || [
+            { course: "MTH201: Calculus", att: 22, tot: 25 },
+            { course: "EE101: Circuits", att: 18, tot: 24 },
+            { course: "CS101: Fundamentals", att: 28, tot: 28 }
+        ];
+
+        function renderAttendance() {
+            const list = document.getElementById('attendanceList');
+            list.innerHTML = '';
+            attendance.forEach((item, i) => {
+                const pct = Math.round((item.att / item.tot) * 100);
+                const colorClass = pct >= 75 ? 'bg-neon-cyan shadow-[0_0_10px_#00f0ff]' : 'bg-neon-pink shadow-[0_0_10px_#ff007f]';
+                const textClass = pct >= 75 ? 'text-neon-cyan' : 'text-neon-pink';
+                list.innerHTML += `
+                    <li class="cursor-pointer group" onclick="logAttendance(${i})">
+                        <div class="flex justify-between items-end mb-1">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">${item.course}</span>
+                            <span class="text-xs font-bold ${textClass}">${pct}%</span>
+                        </div>
+                        <div class="w-full bg-black/50 rounded-full h-1.5 overflow-hidden">
+                            <div class="h-full transition-all duration-500 ${colorClass}" style="width: ${pct}%"></div>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click to log +1 class (${item.att}/${item.tot})</div>
+                    </li>`;
+            });
+        }
+        function logAttendance(i) { attendance[i].att++; attendance[i].tot++; localStorage.setItem('aura_attendance', JSON.stringify(attendance)); renderAttendance(); }
+
+        let exams = JSON.parse(localStorage.getItem('aura_exams')) || [];
+        function renderExams() {
+            const list = document.getElementById('bookedExamsList');
+            list.innerHTML = exams.length ? '' : `<div class="text-slate-400 text-xs py-2">No booked exams.</div>`;
+            exams.forEach((exam, i) => {
+                list.innerHTML += `
+                    <li class="flex items-center justify-between p-2 bg-black/40 rounded border border-neon-cyan/20 mb-2">
+                        <div class="flex flex-col overflow-hidden">
+                            <span class="font-semibold text-slate-200 text-xs truncate">${exam.title}</span>
+                            <span class="text-[10px] text-neon-pink">${new Date(exam.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</span>
+                        </div>
+                        <button onclick="delExam(${i})" class="text-slate-500 hover:text-neon-pink text-xs p-1">✕</button>
+                    </li>`;
+            });
+        }
+        function bookExam() {
+            const title = document.getElementById('examTitle').value;
+            const date = document.getElementById('examDate').value;
+            if (title && date) { exams.push({ title, date }); localStorage.setItem('aura_exams', JSON.stringify(exams)); renderExams(); }
+        }
+        function delExam(i) { exams.splice(i, 1); localStorage.setItem('aura_exams', JSON.stringify(exams)); renderExams(); }
+
+        // ==========================================
+        // 6. ASSIGNMENTS TRACKER
+        // ==========================================
+        let assigns = JSON.parse(localStorage.getItem('aura_assigns')) || [];
+        function renderAssigns() {
+            const list = document.getElementById('assignmentList');
+            list.innerHTML = assigns.length ? '' : `<div class="text-slate-400 text-xs py-2 text-center">No active deadlines.</div>`;
+            assigns.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach((a, i) => {
+                list.innerHTML += `
+                    <li class="flex items-center justify-between p-3 bg-black/40 rounded-lg border border-transparent mb-2 glow-hover">
+                        <span class="text-sm text-slate-200 truncate w-1/2">${a.course}</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] font-bold text-black bg-neon-pink shadow-[0_0_8px_#ff007f] px-2 py-1 rounded">${new Date(a.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span>
+                            <button onclick="delAssign(${i})" class="text-slate-500 hover:text-neon-pink text-xs">✕</button>
+                        </div>
+                    </li>`;
+            });
+        }
+        function addAssignment() {
+            const course = document.getElementById('courseInput').value;
+            const date = document.getElementById('dateInput').value;
+            if(course && date) { assigns.push({course, date}); localStorage.setItem('aura_assigns', JSON.stringify(assigns)); renderAssigns(); }
+        }
+        function delAssign(i) { assigns.splice(i, 1); localStorage.setItem('aura_assigns', JSON.stringify(assigns)); renderAssigns(); }
+
+        // Initialize Everything
+        renderTasks(); renderAttendance(); renderExams(); renderAssigns();
+    </script>
 </body>
 </html>
