@@ -109,20 +109,21 @@ body,main{overflow-x:hidden;}
 
     <canvas id="bg-canvas"></canvas>
 
-    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full p-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap w-[95%] max-w-6xl no-scrollbar slide-in shadow-elegant border-gold-500/30">
-        <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none" style="left: 6px; width: 110px;"></div>
-        
-        <button onclick="moveNav(this, 'dashboard')" aria-label="Dashboard Section" class="nav-btn active-nav relative z-10 flex-shrink-0 px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-bold text-sapphire-900 transition-colors rounded-full tracking-wide text-center">
-            Dashboard
-        </button>
-        <button onclick="moveNav(this, 'academics')" aria-label="Academics Section" class="nav-btn relative z-10 flex-shrink-0 px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide text-center">
-            Academics
-        </button>
-        <button onclick="moveNav(this, 'events')" aria-label="Projects and Events Section" class="nav-btn relative z-10 flex-shrink-0 px-2 md:px-6 py-2.5 md:py-2 text-[11px] md:text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full tracking-wide text-center">
-            <span class="md:hidden">Events</span>
-            <span class="hidden md:inline">Projects & Events</span>
-        </button>
-    </nav>
+    <nav class="fixed top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-max z-50 glass-card rounded-full p-2 flex items-center gap-2 overflow-x-auto no-scrollbar shadow-elegant border-gold-500/30">
+    
+    <div id="nav-highlight" class="absolute h-[calc(100%-12px)] bg-gradient-to-r from-gold-400 to-gold-600 rounded-full shadow-gold-glow pointer-events-none transition-all duration-300 ease-out" style="left: 6px; width: 110px;"></div>
+    
+    <button onclick="moveNav(this, 'dashboard')" class="nav-btn active-nav relative z-10 flex-shrink-0 px-6 py-2 text-sm font-bold text-sapphire-900 rounded-full whitespace-nowrap">
+        Dashboard
+    </button>
+    <button onclick="moveNav(this, 'academics')" class="nav-btn relative z-10 flex-shrink-0 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full whitespace-nowrap">
+        Academics
+    </button>
+    <button onclick="moveNav(this, 'events')" class="nav-btn relative z-10 flex-shrink-0 px-6 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors rounded-full whitespace-nowrap">
+        <span class="md:hidden">Events</span>
+        <span class="hidden md:inline">Projects & Events</span>
+    </button>
+</nav>
 
     <main class="max-w-screen-2xl mx-auto relative z-10 px-4 py-6 sm:px-6 md:px-8 lg:px-10 w-full overflow-x-hidden">
         
